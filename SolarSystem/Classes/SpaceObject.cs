@@ -43,6 +43,22 @@ namespace SolarSystem.Classes
             }
         }
 
+        public virtual Point Position
+        {
+            get
+            {
+                Point pos = new Point();
+                pos.X = Canvas.GetLeft(spaceObject) + Radius;
+                pos.Y = Canvas.GetTop(spaceObject) + Radius;
+                return pos;
+            }
+            set
+            {
+                Canvas.SetLeft(spaceObject, value.X - Radius);
+                Canvas.SetTop(spaceObject, value.Y - Radius);
+            }
+        }
+
         private ImageSource Texture
         {
             get
@@ -58,18 +74,18 @@ namespace SolarSystem.Classes
 
         protected Ellipse spaceObject = new Ellipse();
 
-        public SpaceObject(string name, double radius)
+        public SpaceObject(string name, double radius, string texturePath = "")
         {
             Name = name;
             Radius = radius;
-            Texture = LoadTexture("Textures/" + name + ".png");
-        }
-
-        public SpaceObject(string name, string texturePath, double radius)
-        {
-            Name = name;
-            Radius = radius;
-            Texture = LoadTexture(texturePath);
+            if (texturePath == "")
+            {
+                Texture = LoadTexture("Textures/" + name + ".png");
+            }
+            else
+            {
+                Texture = LoadTexture(texturePath);
+            }
         }
 
         public virtual void Show(Canvas canvas)

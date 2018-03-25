@@ -11,12 +11,16 @@
         KeyDown="Window_KeyDown"
         WindowState="Maximized" 
         WindowStartupLocation="Manual" 
-        WindowStyle="None">
+        WindowStyle="None" 
+        MouseMove="Window_MouseMove">
     <Grid>
 
-        <Canvas x:Name="canvas"
-                Background="Black">
+        <Canvas Background="Black">
+            <Canvas x:Name="cnvSpace"
+                    Canvas.Left="0"
+                    Canvas.Top="0">
             
+            </Canvas>
         </Canvas>
 
 

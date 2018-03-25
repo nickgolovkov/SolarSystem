@@ -62,8 +62,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\OrbitObject.cs" />
     <Compile Include="Classes\Planet.cs" />
-    <Compile Include="Classes\Scale.cs" />
+    <Compile Include="Classes\Satellite.cs" />
     <Compile Include="Classes\SpaceObject.cs" />
     <Compile Include="Classes\Star.cs" />
     <Compile Include="MainWindow.xaml.cs">

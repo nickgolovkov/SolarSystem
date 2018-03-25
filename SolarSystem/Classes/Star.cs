@@ -17,30 +17,17 @@ namespace SolarSystem.Classes
 {
     class Star: SpaceObject
     {
-        public Point Position
+        public int PlanetsCount
         {
             get
             {
-                Point pos = new Point();
-                pos.X = Canvas.GetLeft(spaceObject) + Radius;
-                pos.Y = Canvas.GetTop(spaceObject) + Radius;
-                return pos;
-            }
-            set
-            {
-                Canvas.SetLeft(spaceObject, value.X - Radius);
-                Canvas.SetTop(spaceObject, value.Y - Radius);
+                return planets.Count;
             }
         }
 
-        public List<Planet> planets = new List<Planet>();
+        public List<Planet> planets = new List<Planet>(); 
 
-        public Star(string name, double radius, Point pos): base(name, radius)
-        {
-            Position = pos;
-        }
-
-        public Star(string name, string texturePath, double radius, Point pos): base(name, texturePath, radius)
+        public Star(string name, double radius, Point pos, string texturePath = ""): base(name, radius, texturePath)
         {
             Position = pos;
         }

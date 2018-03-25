@@ -15,35 +15,30 @@ using System.Windows.Shapes;
 
 namespace SolarSystem.Classes
 {
-    class Planet: SpaceObject
+    class Planet: OrbitObject
     {
-        public Star star;
-
-        public double Orbit
+        public int SatellitesCount
         {
             get
             {
-                return Canvas.GetLeft(spaceObject) + Radius - star.Position.X;
+                return satellites.Count;
             }
-            set
+        }
+
+        public List<Satellite> satellites = new List<Satellite>();
+
+        public Planet(string name, double radius, Star center, double orbit, string texturePath = ""): base(name, radius, center, orbit, texturePath)
+        {
+            center.planets.Add(this);
+        }
+
+        public override void Show(Canvas canvas)
+        {
+            base.Show(canvas);
+            foreach (Satellite satellite in satellites)
             {
-                Canvas.SetLeft(spaceObject, star.Position.X + value - Radius);
-                Canvas.SetTop(spaceObject, star.Position.Y - Radius);
+                satellite.Show(canvas);
             }
-        }
-
-        public Planet(string name, double radius, Star star, double orbit): base(name, radius)
-        {
-            this.star = star;
-            Orbit = orbit;
-            star.planets.Add(this);
-        }
-
-        public Planet(string name, string texturePath, double radius, Star star, double orbit): base(name, texturePath, radius)
-        {
-            this.star = star;
-            Orbit = orbit;
-            star.planets.Add(this);
         }
     }
 }

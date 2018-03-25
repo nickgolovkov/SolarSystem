@@ -30,19 +30,27 @@ namespace SolarSystem
         {
             if (e.Key == Key.Enter)
             {
-                double y = ActualHeight / 2;
+                Star sun = new Star("Sun", 140, new Point(0, ActualHeight / 2));
 
-                Star sun = new Star("Sun", 200, new Point(300, y));
-                Planet mercury = new Planet("Mercury", 20, sun, 400);
-                Planet venus = new Planet("Venus", 30, sun, 600);
-                Planet earth = new Planet("Earth", 35, sun, 900);
-                
-                sun.Show(canvas);
+                Planet mercury = new Planet("Mercury", 24, sun, 580);
+                Planet venus = new Planet("Venus", 60, sun, 1080);
+                Planet earth = new Planet("Earth", 63, sun, 1496);
+                Satellite moon = new Satellite("Moon", 5, earth, 384);
+
+                sun.Show(cnvSpace);
             }
 
             if (e.Key == Key.Escape)
             {
                 Application.Current.Shutdown();
+            }
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.GetPosition(this).X > ActualWidth - 20)
+            {
+                Canvas.SetLeft(cnvSpace, Canvas.GetLeft(cnvSpace) - 20);
             }
         }
     }
