@@ -13,10 +13,11 @@
         WindowStartupLocation="Manual" 
         WindowStyle="None" 
         MouseMove="Window_MouseMove">
+    
     <Grid>
 
         <Canvas Background="Black">
-            <Canvas x:Name="cnvSpace"
+            <Canvas x:Name="canvasModel"
                     Canvas.Left="0"
                     Canvas.Top="0">
             
