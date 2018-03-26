@@ -8,11 +8,10 @@
         Title="MainWindow" 
         Width="1280" 
         Height="720"
-        KeyDown="Window_KeyDown"
         WindowState="Maximized" 
         WindowStartupLocation="Manual" 
-        WindowStyle="None" 
-        MouseMove="Window_MouseMove">
+        WindowStyle="None"
+        KeyDown="Window_KeyDown">
     
     <Grid>
 

@@ -25,49 +25,44 @@ namespace SolarSystem
         public MainWindow()
         {
             InitializeComponent();
-            InitTimers();
+            InitTimer();
         }
 
         private const double MOVE_OFFSET = 60;
-        private const double MOVE_COEF = 4;
-        private DispatcherTimer leftMove, topMove, rightMove, bottomMove;
+        private const double MOVE_COEF = 0.4;
+        private DispatcherTimer timerMove;
 
         // Движение камеры
-        private void InitTimers()
+        private void InitTimer()
         {
             const int INTERVAL = 10;
 
-            leftMove = new DispatcherTimer();
-            leftMove.Interval = new TimeSpan(0, 0, 0, 0, INTERVAL);
-            leftMove.Tick += new EventHandler(LeftMoveTick);
+            timerMove = new DispatcherTimer();
+            timerMove.Interval = new TimeSpan(0, 0, 0, 0, INTERVAL);
+            timerMove.Tick += new EventHandler(MoveTick);
+            timerMove.Start();
+        }
+        private void MoveTick(object sender, EventArgs e)
+        {
+            if (Mouse.GetPosition(this).X < MOVE_OFFSET)
+            {
+                Canvas.SetLeft(canvasModel, Canvas.GetLeft(canvasModel) - ((Mouse.GetPosition(this).X - MOVE_OFFSET) * MOVE_COEF));
+            }
 
-            topMove = new DispatcherTimer();
-            topMove.Interval = new TimeSpan(0, 0, 0, 0, INTERVAL);
-            topMove.Tick += new EventHandler(TopMoveTick);
+            if (Mouse.GetPosition(this).Y < MOVE_OFFSET)
+            {
+                Canvas.SetTop(canvasModel, Canvas.GetTop(canvasModel) - ((Mouse.GetPosition(this).Y - MOVE_OFFSET) * MOVE_COEF));
+            }
 
-            rightMove = new DispatcherTimer();
-            rightMove.Interval = new TimeSpan(0, 0, 0, 0, INTERVAL);
-            rightMove.Tick += new EventHandler(RightMoveTick);
+            if (Mouse.GetPosition(this).X > ActualWidth - (MOVE_OFFSET + 10))
+            {
+                Canvas.SetLeft(canvasModel, Canvas.GetLeft(canvasModel) + (ActualWidth - Mouse.GetPosition(this).X - (MOVE_OFFSET + 10)) * MOVE_COEF);
+            }
 
-            bottomMove = new DispatcherTimer();
-            bottomMove.Interval = new TimeSpan(0, 0, 0, 0, INTERVAL);
-            bottomMove.Tick += new EventHandler(BottomMoveTick);
-        }
-        private void LeftMoveTick(object sender, EventArgs e)
-        {
-            Canvas.SetLeft(canvasModel, Canvas.GetLeft(canvasModel) - ((Mouse.GetPosition(this).X - MOVE_OFFSET) / MOVE_COEF));
-        }
-        private void TopMoveTick(object sender, EventArgs e)
-        {
-            Canvas.SetTop(canvasModel, Canvas.GetTop(canvasModel) - ((Mouse.GetPosition(this).Y - MOVE_OFFSET) / MOVE_COEF));
-        }
-        private void RightMoveTick(object sender, EventArgs e)
-        {
-            Canvas.SetLeft(canvasModel, Canvas.GetLeft(canvasModel) + (ActualWidth - Mouse.GetPosition(this).X - (MOVE_OFFSET + 10)) / MOVE_COEF);
-        }
-        private void BottomMoveTick(object sender, EventArgs e)
-        {
-            Canvas.SetTop(canvasModel, Canvas.GetTop(canvasModel) + (ActualHeight - Mouse.GetPosition(this).Y - (MOVE_OFFSET + 10)) / MOVE_COEF);
+            if (Mouse.GetPosition(this).Y > ActualHeight - (MOVE_OFFSET + 10))
+            {
+                Canvas.SetTop(canvasModel, Canvas.GetTop(canvasModel) + (ActualHeight - Mouse.GetPosition(this).Y - (MOVE_OFFSET + 10)) * MOVE_COEF);
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -87,45 +82,6 @@ namespace SolarSystem
             if (e.Key == Key.Escape)
             {
                 Application.Current.Shutdown();
-            }
-        }
-
-        private void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.GetPosition(this).X < MOVE_OFFSET)
-            {
-                leftMove.Start();
-            }
-            else
-            {
-                leftMove.Stop();
-            }
-
-            if (e.GetPosition(this).Y < MOVE_OFFSET)
-            {
-                topMove.Start();
-            }
-            else
-            {
-                topMove.Stop();
-            }
-
-            if (e.GetPosition(this).X > ActualWidth - (MOVE_OFFSET + 10))
-            {
-                rightMove.Start();
-            }
-            else
-            {
-                rightMove.Stop();
-            }
-
-            if (e.GetPosition(this).Y > ActualHeight - (MOVE_OFFSET + 10))
-            {
-                bottomMove.Start();
-            }
-            else
-            {
-                bottomMove.Stop();
             }
         }
     }
