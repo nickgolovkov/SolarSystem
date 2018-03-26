@@ -11,7 +11,8 @@
         WindowState="Maximized" 
         WindowStartupLocation="Manual" 
         WindowStyle="None"
-        KeyDown="Window_KeyDown">
+        KeyDown="Window_KeyDown"
+        MouseWheel="Window_MouseWheel">
     
     <Grid>
 

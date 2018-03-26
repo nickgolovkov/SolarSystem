@@ -23,11 +23,11 @@ namespace SolarSystem.Classes
         {
             get
             {
-                return (Canvas.GetLeft(spaceObject) + Radius - center.Position.X);
+                return (Canvas.GetLeft(spaceObject) + Radius - center.Position.X - center.Radius);
             }
             set
             {
-                Canvas.SetLeft(spaceObject, center.Position.X + value - Radius);
+                Canvas.SetLeft(spaceObject, center.Position.X + center.Radius + value - Radius);
                 Canvas.SetTop(spaceObject, center.Position.Y - Radius);
             }
         }

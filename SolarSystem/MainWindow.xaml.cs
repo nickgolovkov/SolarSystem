@@ -69,12 +69,12 @@ namespace SolarSystem
         {
             if (e.Key == Key.Enter)
             {
-                Star sun = new Star("Sun", 140, new Point(0, ActualHeight / 2));
+                Star sun = new Star("Sun", 685, new Point(ActualWidth / 2, ActualHeight / 2));
 
                 Planet mercury = new Planet("Mercury", 24, sun, 580);
                 Planet venus = new Planet("Venus", 60, sun, 1080);
                 Planet earth = new Planet("Earth", 63, sun, 1496);
-                Satellite moon = new Satellite("Moon", 5, earth, 384);
+                Satellite moon = new Satellite("Moon", 5, earth, 38);
 
                 sun.Show(canvasModel);
             }
@@ -82,6 +82,27 @@ namespace SolarSystem
             if (e.Key == Key.Escape)
             {
                 Application.Current.Shutdown();
+            }
+        }
+
+        private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                double scaleDelta = e.Delta / (double)1000;
+
+                ScaleTransform st = canvasModel.RenderTransform as ScaleTransform;
+
+                if (st != null)
+                {
+                    st.ScaleX += scaleDelta;
+                    st.ScaleY += scaleDelta;
+                }
+                else
+                {
+                    canvasModel.RenderTransform = new ScaleTransform(1 + scaleDelta, 1 + scaleDelta, ActualWidth / 2, ActualHeight / 2);
+                }
+
             }
         }
     }
