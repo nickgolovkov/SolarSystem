@@ -19,7 +19,7 @@ namespace SolarSystem.Classes
     {
         SpaceObject center;
 
-        public double Orbit
+        public virtual double Orbit
         {
             get
             {
@@ -42,7 +42,7 @@ namespace SolarSystem.Classes
             get => base.Position;
         }
 
-        Ellipse orbitObject = new Ellipse()
+        private Ellipse orbitObject = new Ellipse()
         {
             Stroke = new SolidColorBrush(Colors.White),
             Opacity = 0.5,

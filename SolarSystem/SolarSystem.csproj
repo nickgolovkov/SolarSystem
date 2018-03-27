@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="Classes\OrbitObject.cs" />
     <Compile Include="Classes\Planet.cs" />
+    <Compile Include="Classes\PlanetWithRings.cs" />
     <Compile Include="Classes\Satellite.cs" />
     <Compile Include="Classes\SpaceObject.cs" />
     <Compile Include="Classes\Star.cs" />

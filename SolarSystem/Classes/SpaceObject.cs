@@ -96,7 +96,7 @@ namespace SolarSystem.Classes
             }
         }
 
-        private BitmapImage LoadTexture(string path)
+        protected BitmapImage LoadTexture(string path)
         {
             BitmapImage bm = new BitmapImage();
             bm.BeginInit();
