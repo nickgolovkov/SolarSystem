@@ -29,6 +29,11 @@ namespace SolarSystem.Classes
             {
                 Canvas.SetLeft(spaceObject, center.Position.X + center.Radius + value - Radius);
                 Canvas.SetTop(spaceObject, center.Position.Y - Radius);
+
+                orbitObject.Width = (Orbit + center.Radius) * 2;
+                orbitObject.Height = orbitObject.Width;
+                Canvas.SetLeft(orbitObject, center.Position.X - center.Radius - Orbit);
+                Canvas.SetTop(orbitObject, center.Position.Y - center.Radius - Orbit);
             }
         }
 
@@ -37,10 +42,29 @@ namespace SolarSystem.Classes
             get => base.Position;
         }
 
+        Ellipse orbitObject = new Ellipse()
+        {
+            Stroke = new SolidColorBrush(Colors.White),
+            Opacity = 0.5,
+            StrokeThickness = 0.6
+        };
+
+
         public OrbitObject(string name, double radius, SpaceObject center, double orbit, string texturePath = ""): base(name, radius, texturePath)
         {
             this.center = center;
             Orbit = orbit;
+
+            if (this is Satellite)
+            {
+                orbitObject.StrokeThickness = 0.3;
+            }
+        }
+
+        public override void Show(Canvas canvas)
+        {
+            canvas.Children.Add(orbitObject);
+            base.Show(canvas);
         }
     }
 }

@@ -22,6 +22,12 @@ namespace SolarSystem
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Масштабы
+        // Звезды 1 : 1 тыс. км
+        // Планеты и спутники 1 : 1 тыс. км
+        // Орбиты планет 1 : 1 млн. км
+        // Орбиты спутнико 1 : 100 тыс. км 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -69,12 +75,17 @@ namespace SolarSystem
         {
             if (e.Key == Key.Enter)
             {
-                Star sun = new Star("Sun", 685, new Point(ActualWidth / 2, ActualHeight / 2));
+                Star sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
 
-                Planet mercury = new Planet("Mercury", 24, sun, 580);
-                Planet venus = new Planet("Venus", 60, sun, 1080);
-                Planet earth = new Planet("Earth", 63, sun, 1496);
-                Satellite moon = new Satellite("Moon", 5, earth, 38);
+                Planet mercury = new Planet("Mercury", 2.4, sun, 58);
+                Planet venus = new Planet("Venus", 6.0, sun, 108.2);
+                Planet earth = new Planet("Earth", 6.3, sun, 149.6);
+                Satellite moon = new Satellite("Moon", 1.7, earth, 3.8);
+                Planet mars = new Planet("Mars", 3.4, sun, 227.9);
+                Planet jupiter = new Planet("Jupiter", 69.9, sun, 778.5);
+                Planet saturn = new Planet("Saturn", 58.2, sun, 1429);
+                Planet uranus = new Planet("Uranus", 25.3, sun, 2871);
+                Planet neptune = new Planet("Neptune", 24.6, sun, 4498);
 
                 sun.Show(canvasModel);
             }
