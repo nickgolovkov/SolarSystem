@@ -23,17 +23,14 @@ namespace SolarSystem.Classes
         {
             get
             {
-                return (Canvas.GetLeft(spaceObject) + Radius - center.Position.X - center.Radius);
+                return orbitObject.Width / 2 - center.Radius;
             }
             set
             {
-                Canvas.SetLeft(spaceObject, center.Position.X + center.Radius + value - Radius);
-                Canvas.SetTop(spaceObject, center.Position.Y - Radius);
-
-                orbitObject.Width = (Orbit + center.Radius) * 2;
+                orbitObject.Width = (value + center.Radius) * 2;
                 orbitObject.Height = orbitObject.Width;
-                Canvas.SetLeft(orbitObject, center.Position.X - center.Radius - Orbit);
-                Canvas.SetTop(orbitObject, center.Position.Y - center.Radius - Orbit);
+
+                SetPosition();
             }
         }
 
@@ -49,9 +46,25 @@ namespace SolarSystem.Classes
             StrokeThickness = 0.6
         };
 
-
-        public OrbitObject(string name, double radius, SpaceObject center, double orbit, string texturePath = ""): base(name, radius, texturePath)
+        public double AngularVelocity
         {
+            get
+            {
+                return Math.PI * 2 / period;
+            }
+            set
+            {
+                period = Math.PI * 2 / value;
+            }
+        }
+
+        public double period;
+        
+        private double angle = 0;
+
+        public OrbitObject(string name, double radius, SpaceObject center, double orbit, double period, string texturePath = ""): base(name, radius, texturePath)
+        {
+            this.period = period;
             this.center = center;
             Orbit = orbit;
 
@@ -65,6 +78,24 @@ namespace SolarSystem.Classes
         {
             canvas.Children.Add(orbitObject);
             base.Show(canvas);
+        }
+
+        public void Rotate()
+        {
+            angle += AngularVelocity;
+            SetPosition();
+        }
+
+        protected virtual void SetPosition()
+        {
+            Canvas.SetLeft(orbitObject, center.Position.X - center.Radius - Orbit);
+            Canvas.SetTop(orbitObject, center.Position.Y - center.Radius - Orbit);
+
+            double x = Math.Cos(angle) * (center.Radius + Orbit);
+            double y = Math.Sin(angle) * (center.Radius + Orbit);
+
+            Canvas.SetLeft(spaceObject, center.Position.X + x - Radius);
+            Canvas.SetTop(spaceObject, center.Position.Y + y - Radius);
         }
     }
 }

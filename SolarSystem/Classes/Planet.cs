@@ -27,7 +27,7 @@ namespace SolarSystem.Classes
 
         public List<Satellite> satellites = new List<Satellite>();
 
-        public Planet(string name, double radius, Star center, double orbit, string texturePath = ""): base(name, radius, center, orbit, texturePath)
+        public Planet(string name, double radius, Star center, double orbit, double period, string texturePath = ""): base(name, radius, center, orbit, period, texturePath)
         {
             center.planets.Add(this);
         }

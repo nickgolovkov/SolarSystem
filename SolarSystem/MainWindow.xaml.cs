@@ -31,7 +31,7 @@ namespace SolarSystem
         public MainWindow()
         {
             InitializeComponent();
-            InitTimer();
+            InitMoveTimer();
         }
 
         private const double MOVE_OFFSET = 60;
@@ -39,7 +39,7 @@ namespace SolarSystem
         private DispatcherTimer timerMove;
 
         // Движение камеры
-        private void InitTimer()
+        private void InitMoveTimer()
         {
             const int INTERVAL = 10;
 
@@ -71,23 +71,60 @@ namespace SolarSystem
             }
         }
 
+        private DispatcherTimer timerRotate;
+        private void InitRotateTimer()
+        {
+            const int INTERVAL = 10;
+
+            timerRotate = new DispatcherTimer();
+            timerRotate.Interval = new TimeSpan(0, 0, 0, 0, INTERVAL);
+            timerRotate.Tick += new EventHandler(RotateTick);
+            timerRotate.Start();
+        }
+        private void RotateTick(object sender, EventArgs e)
+        {
+            foreach (Planet planet in sun.planets)
+            {
+                planet.Rotate();
+                foreach (Satellite satellite in planet.satellites)
+                {
+                    satellite.Rotate();
+                }
+            }
+        }
+
+
+        private Star sun;
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                Star sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
+                sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
 
-                Planet mercury = new Planet("Mercury", 2.4, sun, 58);
-                Planet venus = new Planet("Venus", 6.0, sun, 108.2);
-                Planet earth = new Planet("Earth", 6.3, sun, 149.6);
-                Satellite moon = new Satellite("Moon", 1.7, earth, 3.8);
-                Planet mars = new Planet("Mars", 3.4, sun, 227.9);
-                Planet jupiter = new Planet("Jupiter", 69.9, sun, 778.5);
-                PlanetWithRings saturn = new PlanetWithRings("Saturn", 58.2, 130, sun, 1429);
-                Planet uranus = new Planet("Uranus", 25.3, sun, 2871);
-                Planet neptune = new Planet("Neptune", 24.6, sun, 4498);
+                Planet mercury = new Planet("Mercury", 2.4, sun, 58, 88);
+                Planet venus = new Planet("Venus", 6.0, sun, 108.2, 225);
+                Planet earth = new Planet("Earth", 6.3, sun, 149.6, 365);
+                Satellite moon = new Satellite("Moon", 1.7, earth, 3.8, 27);
+                Planet mars = new Planet("Mars", 3.4, sun, 227.9, 687);
+                Planet jupiter = new Planet("Jupiter", 69.9, sun, 778.5, 12 * 365);
+                PlanetWithRings saturn = new PlanetWithRings("Saturn", 58.2, 130, sun, 1429, 29 * 365);
+                Planet uranus = new Planet("Uranus", 25.3, sun, 2871, 84 * 365);
+                Planet neptune = new Planet("Neptune", 24.6, sun, 4498, 165 * 365);
 
                 sun.Show(canvasModel);
+                InitRotateTimer();
+            }
+
+            if (e.Key == Key.S)
+            {
+                if (timerRotate.IsEnabled)
+                {
+                    timerRotate.Stop();
+                }
+                else
+                {
+                    timerRotate.Start();
+                }
             }
 
             if (e.Key == Key.Escape)
@@ -113,7 +150,6 @@ namespace SolarSystem
                 {
                     canvasModel.RenderTransform = new ScaleTransform(1 + scaleDelta, 1 + scaleDelta, ActualWidth / 2, ActualHeight / 2);
                 }
-
             }
         }
     }

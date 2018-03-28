@@ -58,7 +58,7 @@ namespace SolarSystem.Classes
 
         private Ellipse ringsObject = new Ellipse();
 
-        public PlanetWithRings(string name, double radius, double ringsRadius, Star center, double orbit, string texturePath = "", string ringsTexturePath = ""): base(name, radius, center, orbit, texturePath)
+        public PlanetWithRings(string name, double radius, double ringsRadius, Star center, double orbit, double period, string texturePath = "", string ringsTexturePath = ""): base(name, radius, center, orbit, period, texturePath)
         {
             RingsRadius = ringsRadius;
 
@@ -84,6 +84,12 @@ namespace SolarSystem.Classes
         {
             Canvas.SetLeft(ringsObject, Canvas.GetLeft(spaceObject) + Radius - RingsRadius);
             Canvas.SetTop(ringsObject, Canvas.GetTop(spaceObject) + Radius - RingsRadius);
+        }
+
+        protected override void SetPosition()
+        {
+            base.SetPosition();
+            SetRings();
         }
     }
 }
