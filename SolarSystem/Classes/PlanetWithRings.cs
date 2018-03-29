@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace SolarSystem.Classes
 {
-    class PlanetWithRings: Planet
+    public class PlanetWithRings : Planet
     {
         public override double Orbit
         {
@@ -72,6 +72,8 @@ namespace SolarSystem.Classes
             }
 
             SetRings();
+
+            ringsObject.MouseRightButtonDown += ShowProperties;
         }
 
         public override void Show(Canvas canvas)

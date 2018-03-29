@@ -28,3 +28,5 @@ D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Sol
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\SolarSystem.csproj.CoreCompileInputs.cache
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\SolarSystem.exe
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\SolarSystem.pdb
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjProperties.g.cs
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjProperties.baml

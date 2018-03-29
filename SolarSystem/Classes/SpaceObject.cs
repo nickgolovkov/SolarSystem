@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace SolarSystem.Classes
 {
-    abstract class SpaceObject
+    public abstract class SpaceObject
     {
         public string Name
         {
@@ -38,8 +38,12 @@ namespace SolarSystem.Classes
             }
             set
             {
+                Point pos = Position;
+
                 spaceObject.Width = value * 2;
                 spaceObject.Height = value * 2;
+
+                Position = pos;
             }
         }
 
@@ -72,7 +76,10 @@ namespace SolarSystem.Classes
             }
         }
 
-        protected Ellipse spaceObject = new Ellipse();
+        protected Ellipse spaceObject = new Ellipse()
+        {
+            Cursor = Cursors.Hand
+        };
 
         public SpaceObject(string name, double radius, string texturePath = "")
         {
@@ -86,6 +93,14 @@ namespace SolarSystem.Classes
             {
                 Texture = LoadTexture(texturePath);
             }
+
+            spaceObject.MouseRightButtonDown += ShowProperties;
+        }
+
+        protected void ShowProperties(object sender, MouseButtonEventArgs e)
+        {
+            Canvas parent = (spaceObject.Parent as Canvas).Parent as Canvas;
+            UI.SpaceObjProperties spaceObjProperties = new UI.SpaceObjProperties(this, Mouse.GetPosition(parent), parent);
         }
 
         public virtual void Show(Canvas canvas)

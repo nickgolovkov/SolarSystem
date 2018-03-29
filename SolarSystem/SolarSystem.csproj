@@ -54,6 +54,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Classes\UI\SpaceObjProperties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,10 +69,12 @@
     <Compile Include="Classes\OrbitObject.cs" />
     <Compile Include="Classes\Planet.cs" />
     <Compile Include="Classes\PlanetWithRings.cs" />
-    <Compile Include="Classes\Rand.cs" />
     <Compile Include="Classes\Satellite.cs" />
     <Compile Include="Classes\SpaceObject.cs" />
     <Compile Include="Classes\Star.cs" />
+    <Compile Include="Classes\UI\SpaceObjProperties.xaml.cs">
+      <DependentUpon>SpaceObjProperties.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -93,6 +99,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Classes\ClassDiagram.cd" />
+    <Resource Include="Classes\UI\MontserratRegular.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

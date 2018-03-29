@@ -27,6 +27,7 @@ namespace SolarSystem
         // Планеты и спутники 1 : 1 тыс. км
         // Орбиты планет 1 : 1 млн. км
         // Орбиты спутнико 1 : 100 тыс. км 
+        // Время
 
         public MainWindow()
         {
@@ -34,11 +35,30 @@ namespace SolarSystem
             InitMoveTimer();
         }
 
+        private Star sun;
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
+
+            Planet mercury = new Planet("Mercury", 2.4, sun, sun.Radius + 58, 880);
+            Planet venus = new Planet("Venus", 6.0, sun, sun.Radius + 108.2, 2250);
+            Planet earth = new Planet("Earth", 6.3, sun, sun.Radius + 149.6, 3650);
+            Satellite moon = new Satellite("Moon", 1.7, earth, earth.Radius + 3.8, 270);
+            Planet mars = new Planet("Mars", 3.4, sun, sun.Radius + 227.9, 6870);
+            Planet jupiter = new Planet("Jupiter", 69.9, sun, sun.Radius + 778.5, 120 * 365);
+            PlanetWithRings saturn = new PlanetWithRings("Saturn", 58.2, 130, sun, sun.Radius + 1429, 290 * 365);
+            Planet uranus = new Planet("Uranus", 25.3, sun, sun.Radius + 2871, 840 * 365);
+            Planet neptune = new Planet("Neptune", 24.6, sun, sun.Radius + 4498, 1650 * 365);
+
+            sun.Show(canvasModel);
+            InitRotateTimer();
+        }
+
         private const double MOVE_OFFSET = 60;
         private const double MOVE_COEF = 0.4;
-        private DispatcherTimer timerMove;
 
         // Движение камеры
+        private DispatcherTimer timerMove;
         private void InitMoveTimer()
         {
             const int INTERVAL = 10;
@@ -71,6 +91,7 @@ namespace SolarSystem
             }
         }
 
+        // Вращение объектов
         private DispatcherTimer timerRotate;
         private void InitRotateTimer()
         {
@@ -93,28 +114,9 @@ namespace SolarSystem
             }
         }
 
-
-        private Star sun;
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
-
-                Planet mercury = new Planet("Mercury", 2.4, sun, 58, 88);
-                Planet venus = new Planet("Venus", 6.0, sun, 108.2, 225);
-                Planet earth = new Planet("Earth", 6.3, sun, 149.6, 365);
-                Satellite moon = new Satellite("Moon", 1.7, earth, 3.8, 27);
-                Planet mars = new Planet("Mars", 3.4, sun, 227.9, 687);
-                Planet jupiter = new Planet("Jupiter", 69.9, sun, 778.5, 12 * 365);
-                PlanetWithRings saturn = new PlanetWithRings("Saturn", 58.2, 130, sun, 1429, 29 * 365);
-                Planet uranus = new Planet("Uranus", 25.3, sun, 2871, 84 * 365);
-                Planet neptune = new Planet("Neptune", 24.6, sun, 4498, 165 * 365);
-
-                sun.Show(canvasModel);
-                InitRotateTimer();
-            }
-
+            // Остановка вращения планет
             if (e.Key == Key.S)
             {
                 if (timerRotate.IsEnabled)
@@ -127,7 +129,8 @@ namespace SolarSystem
                 }
             }
 
-            if (e.Key == Key.Escape)
+            // Выход
+            if (e.Key == Key.Q)
             {
                 Application.Current.Shutdown();
             }

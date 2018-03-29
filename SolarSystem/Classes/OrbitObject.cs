@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace SolarSystem.Classes
 {
-    abstract class OrbitObject : SpaceObject
+    public abstract class OrbitObject : SpaceObject
     {
         SpaceObject center;
 
@@ -23,11 +23,11 @@ namespace SolarSystem.Classes
         {
             get
             {
-                return orbitObject.Width / 2 - center.Radius;
+                return orbitObject.Width / 2;
             }
             set
             {
-                orbitObject.Width = (value + center.Radius) * 2;
+                orbitObject.Width = value * 2;
                 orbitObject.Height = orbitObject.Width;
 
                 SetPosition();
@@ -88,11 +88,11 @@ namespace SolarSystem.Classes
 
         protected virtual void SetPosition()
         {
-            Canvas.SetLeft(orbitObject, center.Position.X - center.Radius - Orbit);
-            Canvas.SetTop(orbitObject, center.Position.Y - center.Radius - Orbit);
+            Canvas.SetLeft(orbitObject, center.Position.X - Orbit);
+            Canvas.SetTop(orbitObject, center.Position.Y - Orbit);
 
-            double x = Math.Cos(angle) * (center.Radius + Orbit);
-            double y = Math.Sin(angle) * (center.Radius + Orbit);
+            double x = Math.Cos(angle) * Orbit;
+            double y = Math.Sin(angle) * Orbit;
 
             Canvas.SetLeft(spaceObject, center.Position.X + x - Radius);
             Canvas.SetTop(spaceObject, center.Position.Y + y - Radius);

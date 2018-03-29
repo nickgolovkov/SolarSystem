@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace SolarSystem.Classes
 {
-    class Planet: OrbitObject
+    public class Planet : OrbitObject
     {
         public int SatellitesCount
         {
