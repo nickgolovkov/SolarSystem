@@ -30,3 +30,9 @@ D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Sol
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\SolarSystem.pdb
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjProperties.g.cs
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjProperties.baml
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\bin\Debug\MaterialDesignColors.dll
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\App.baml
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\SolarSystem.csproj.CopyComplete
