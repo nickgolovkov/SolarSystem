@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using SolarSystem.Classes;
+using SolarSystem.Classes.UI;
 
 namespace SolarSystem
 {
@@ -27,18 +28,18 @@ namespace SolarSystem
         // Планеты и спутники 1 : 1 тыс. км
         // Орбиты планет 1 : 1 млн. км
         // Орбиты спутнико 1 : 100 тыс. км 
-        // Время
 
         public MainWindow()
         {
             InitializeComponent();
             InitMoveTimer();
+            InitRotateTimer();
         }
 
-        private Star sun;
+        private List<Star> stars = new List<Star>();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
+            Star sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
 
             Planet mercury = new Planet("Mercury", 2.4, sun, sun.Radius + 58, 880);
             Planet venus = new Planet("Venus", 6.0, sun, sun.Radius + 108.2, 2250);
@@ -51,11 +52,9 @@ namespace SolarSystem
             Planet neptune = new Planet("Neptune", 24.6, sun, sun.Radius + 4498, 1650 * 365);
 
             sun.Show(canvasModel);
-            InitRotateTimer();
-        }
 
-        private const double MOVE_OFFSET = 60;
-        private const double MOVE_COEF = 0.4;
+            stars.Add(sun);
+        }
 
         // Движение камеры
         private DispatcherTimer timerMove;
@@ -70,6 +69,9 @@ namespace SolarSystem
         }
         private void MoveTick(object sender, EventArgs e)
         {
+            const double MOVE_OFFSET = 60;
+            const double MOVE_COEF = 0.4;
+
             if (Mouse.GetPosition(this).X < MOVE_OFFSET)
             {
                 Canvas.SetLeft(canvasModel, Canvas.GetLeft(canvasModel) - ((Mouse.GetPosition(this).X - MOVE_OFFSET) * MOVE_COEF));
@@ -104,12 +106,15 @@ namespace SolarSystem
         }
         private void RotateTick(object sender, EventArgs e)
         {
-            foreach (Planet planet in sun.planets)
+            foreach (Star star in stars)
             {
-                planet.Rotate();
-                foreach (Satellite satellite in planet.satellites)
+                foreach (Planet planet in star.planets)
                 {
-                    satellite.Rotate();
+                    planet.Rotate();
+                    foreach (Satellite satellite in planet.satellites)
+                    {
+                        satellite.Rotate();
+                    }
                 }
             }
         }
@@ -138,6 +143,7 @@ namespace SolarSystem
 
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            // Масштабирование
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
                 double scaleDelta = e.Delta / (double)1000;
@@ -146,8 +152,11 @@ namespace SolarSystem
 
                 if (st != null)
                 {
-                    st.ScaleX += scaleDelta;
-                    st.ScaleY += scaleDelta;
+                    if (st.ScaleX + scaleDelta > 0)
+                    {
+                        st.ScaleX += scaleDelta;
+                        st.ScaleY += scaleDelta;
+                    }
                 }
                 else
                 {

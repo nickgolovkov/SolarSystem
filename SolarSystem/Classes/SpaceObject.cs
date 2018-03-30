@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SolarSystem.Classes.UI;
 
 namespace SolarSystem.Classes
 {
@@ -100,7 +101,7 @@ namespace SolarSystem.Classes
         protected void ShowProperties(object sender, MouseButtonEventArgs e)
         {
             Canvas parent = (spaceObject.Parent as Canvas).Parent as Canvas;
-            UI.SpaceObjProperties spaceObjProperties = new UI.SpaceObjProperties(this, Mouse.GetPosition(parent), parent);
+            SpaceObjProperties spaceObjProperties = new UI.SpaceObjProperties(this, Mouse.GetPosition(parent), parent);
         }
 
         public virtual void Show(Canvas canvas)
@@ -120,6 +121,5 @@ namespace SolarSystem.Classes
 
             return bm;
         }
-        
     }
 }

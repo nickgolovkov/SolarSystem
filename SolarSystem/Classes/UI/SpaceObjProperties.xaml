@@ -50,7 +50,7 @@
                      FontSize="20"
                      VerticalAlignment="Center"
                      Margin="20, 10"
-                     Padding="2"
+                     Padding="2, 0"
                      TextChanged="txtboxRadius_TextChanged"/>
 
             <TextBlock Grid.Column="0"
@@ -70,7 +70,7 @@
                      FontSize="20"
                      VerticalAlignment="Center"
                      Margin="20, 10"
-                     Padding="2"
+                     Padding="2, 0"
                      Visibility="Collapsed"
                      TextChanged="txtboxOrbit_TextChanged"/>
 
@@ -91,12 +91,14 @@
                      FontSize="20"
                      VerticalAlignment="Center"
                      Margin="20, 10"
-                     Padding="2"
+                     Padding="2, 0"
                      Visibility="{Binding ElementName=txtboxOrbit, Path=Visibility}"
                      TextChanged="txtboxPeriod_TextChanged"/>
 
             <Button x:Name="btnSave"
                     Opacity="0"
+                    Width="0"
+                    Height="0"
                     IsCancel="True"
                     Click="btnSave_Click"/>
         

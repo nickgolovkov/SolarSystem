@@ -73,6 +73,12 @@ namespace SolarSystem.Classes.UI
         
         private void Show(Canvas canvas)
         {
+            ClosePrev(canvas);
+            canvas.Children.Add(this);
+        }
+
+        public static void ClosePrev(Canvas canvas)
+        {
             foreach (UIElement el in canvas.Children)
             {
                 if (el is SpaceObjProperties)
@@ -81,8 +87,6 @@ namespace SolarSystem.Classes.UI
                     break;
                 }
             }
-
-            canvas.Children.Add(this);
         }
 
         private void txtboxRadius_TextChanged(object sender, TextChangedEventArgs e)
@@ -117,6 +121,5 @@ namespace SolarSystem.Classes.UI
             Canvas parent = Parent as Canvas;
             parent.Children.Remove(this);
         }
-
     }
 }
