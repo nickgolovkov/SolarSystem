@@ -72,6 +72,8 @@ namespace SolarSystem.Classes
             {
                 orbitObject.StrokeThickness = 0.3;
             }
+
+            Canvas.SetZIndex(orbitObject, -1);
         }
 
         public override void Show(Canvas canvas)

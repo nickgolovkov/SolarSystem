@@ -5,57 +5,101 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SolarSystem.Classes.UI"
              mc:Ignorable="d" 
-             FontFamily="./#Montserrat">
+             FontFamily="./#Montserrat"
+             Loaded="SpaceObjProperties_Loaded">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
 
         <Rectangle Fill="#99FFFFFF"
-                   Grid.ColumnSpan="2"
-                   Grid.RowSpan="4"
                    RadiusX="10"
                    RadiusY="10"/>
-
-        <TextBlock x:Name="txtblockName"
-                   Grid.Row="0"
-                   Grid.ColumnSpan="2"
-                   Text="SUN"
-                   FontSize="24"
-                   FontWeight="Bold"
-                   HorizontalAlignment="Center"
-                   Margin="20, 20, 20, 10"/>
-
-        <TextBlock Grid.Column="0"
-                   Grid.Row="1"
-                   Text="Radius:"
-                   FontSize="20"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Margin="20, 10, 20, 20"/>
-
-        <TextBox x:Name="txtboxRadius"
-                 Grid.Column="1"
-                 Grid.Row="1"
-                 Text="685"
-                 MinWidth="140"
-                 FontSize="20"
-                 VerticalAlignment="Center"
-                 Margin="20, 10, 20, 20"
-                 Padding="2"
-                 TextChanged="txtboxRadius_TextChanged"/>
-
-        <Button x:Name="btnSave"
-                Opacity="0"
-                IsCancel="True"
-                Click="btnSave_Click"/>
         
+        <Grid Margin="0, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="txtblockName"
+                       Grid.Row="0"
+                       Grid.ColumnSpan="2"
+                       Text="SUN"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Margin="10"/>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="1"
+                       Text="Radius:"
+                       FontSize="20"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="20, 10"/>
+
+            <TextBox x:Name="txtboxRadius"
+                     Grid.Column="1"
+                     Grid.Row="1"
+                     Text="685"
+                     MinWidth="140"
+                     FontSize="20"
+                     VerticalAlignment="Center"
+                     Margin="20, 10"
+                     Padding="2"
+                     TextChanged="txtboxRadius_TextChanged"/>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="2"
+                       Text="Orbit:"
+                       FontSize="20"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Visibility="{Binding ElementName=txtboxOrbit, Path=Visibility}"
+                       Margin="20, 10"/>
+
+            <TextBox x:Name="txtboxOrbit"
+                     Grid.Column="1"
+                     Grid.Row="2"
+                     Text="685"
+                     MinWidth="140"
+                     FontSize="20"
+                     VerticalAlignment="Center"
+                     Margin="20, 10"
+                     Padding="2"
+                     Visibility="Collapsed"
+                     TextChanged="txtboxOrbit_TextChanged"/>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="3"
+                       Text="Period:"
+                       FontSize="20"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Visibility="{Binding ElementName=txtboxOrbit, Path=Visibility}"
+                       Margin="20, 10"/>
+
+            <TextBox x:Name="txtboxPeriod"
+                     Grid.Column="1"
+                     Grid.Row="3"
+                     Text="685"
+                     MinWidth="140"
+                     FontSize="20"
+                     VerticalAlignment="Center"
+                     Margin="20, 10"
+                     Padding="2"
+                     Visibility="{Binding ElementName=txtboxOrbit, Path=Visibility}"
+                     TextChanged="txtboxPeriod_TextChanged"/>
+
+            <Button x:Name="btnSave"
+                    Opacity="0"
+                    IsCancel="True"
+                    Click="btnSave_Click"/>
+        
+        </Grid>
     </Grid>
 </UserControl>

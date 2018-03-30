@@ -56,7 +56,10 @@ namespace SolarSystem.Classes
             }
         }
 
-        private Ellipse ringsObject = new Ellipse();
+        private Ellipse ringsObject = new Ellipse()
+        {
+            Cursor = Cursors.Hand
+        };
 
         public PlanetWithRings(string name, double radius, double ringsRadius, Star center, double orbit, double period, string texturePath = "", string ringsTexturePath = ""): base(name, radius, center, orbit, period, texturePath)
         {

@@ -21,20 +21,57 @@ namespace SolarSystem.Classes.UI
     public partial class SpaceObjProperties : UserControl
     {
         SpaceObject spaceObj;
+        Point pos;
 
         public SpaceObjProperties(SpaceObject spaceObj, Point pos, Canvas canvas)
         {
             InitializeComponent();
 
             this.spaceObj = spaceObj;
+            this.pos = pos;
 
             txtblockName.Text = spaceObj.Name;
             txtboxRadius.Text = spaceObj.Radius.ToString();
 
-            Show(pos, canvas);
+            if (spaceObj is OrbitObject)
+            {
+                InitOrbitObjProperties(spaceObj as OrbitObject);
+            }
+
+            Show(canvas);
         }
 
-        private void Show(Point pos, Canvas canvas)
+        private void SpaceObjProperties_Loaded(object sender, RoutedEventArgs e)
+        {
+            Canvas canvas = Parent as Canvas;
+
+            if (pos.X + ActualWidth < SystemParameters.PrimaryScreenWidth)
+            {
+                Canvas.SetLeft(this, pos.X);
+            }
+            else
+            {
+                Canvas.SetRight(this, canvas.ActualWidth - pos.X);
+            }
+
+            if (pos.Y + ActualHeight < SystemParameters.PrimaryScreenHeight)
+            {
+                Canvas.SetTop(this, pos.Y);
+            }
+            else
+            {
+                Canvas.SetBottom(this, canvas.ActualHeight - pos.Y);
+            }
+        }
+
+        private void InitOrbitObjProperties(OrbitObject orbitObj)
+        {
+            txtboxOrbit.Visibility = Visibility.Visible;
+            txtboxOrbit.Text = orbitObj.Orbit.ToString();
+            txtboxPeriod.Text = orbitObj.period.ToString();
+        }
+        
+        private void Show(Canvas canvas)
         {
             foreach (UIElement el in canvas.Children)
             {
@@ -46,28 +83,6 @@ namespace SolarSystem.Classes.UI
             }
 
             canvas.Children.Add(this);
-
-            double WIDTH = 320;
-            double HEIGHT = 140;
-
-            if (pos.X + WIDTH < SystemParameters.PrimaryScreenWidth)
-            {
-                Canvas.SetLeft(this, pos.X);
-            }
-            else
-            {
-                Canvas.SetRight(this, canvas.ActualWidth - pos.X);
-            }
-
-            if (pos.Y + HEIGHT < SystemParameters.PrimaryScreenHeight)
-            {
-                Canvas.SetTop(this, pos.Y);
-            }
-            else
-            {
-                Canvas.SetBottom(this, canvas.ActualHeight - pos.Y);
-            }
-
         }
 
         private void txtboxRadius_TextChanged(object sender, TextChangedEventArgs e)
@@ -79,10 +94,29 @@ namespace SolarSystem.Classes.UI
             catch { }
         }
 
+        private void txtboxOrbit_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                (spaceObj as OrbitObject).Orbit = Convert.ToDouble(txtboxOrbit.Text);
+            }
+            catch { }
+        }
+
+        private void txtboxPeriod_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                (spaceObj as OrbitObject).period = Convert.ToDouble(txtboxPeriod.Text);
+            }
+            catch { }
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             Canvas parent = Parent as Canvas;
             parent.Children.Remove(this);
         }
+
     }
 }
