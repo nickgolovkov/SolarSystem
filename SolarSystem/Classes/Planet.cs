@@ -17,14 +17,6 @@ namespace SolarSystem.Classes
 {
     public class Planet : OrbitObject
     {
-        public int SatellitesCount
-        {
-            get
-            {
-                return satellites.Count;
-            }
-        }
-
         public List<Satellite> satellites = new List<Satellite>();
 
         public Planet(string name, double radius, Star center, double orbit, double period, string texturePath = ""): base(name, radius, center, orbit, period, texturePath)
@@ -39,6 +31,22 @@ namespace SolarSystem.Classes
             {
                 satellite.Show(canvas);
             }
+        }
+
+        public override void Delete(Canvas canvas)
+        {
+            List<Satellite> temp = new List<Satellite>(satellites);
+            foreach (Satellite satellite in temp)
+            {
+                satellite.Delete(canvas);
+            }
+            base.Delete(canvas);
+        }
+
+        protected override void DeleteFromCenterList()
+        {
+            Star star = center as Star;
+            star.planets.Remove(this);
         }
     }
 }

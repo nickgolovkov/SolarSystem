@@ -43,6 +43,9 @@ namespace SolarSystem.Classes.UI
 
         private void SpaceObjProperties_Loaded(object sender, RoutedEventArgs e)
         {
+            Window window = Window.GetWindow(this);
+            window.KeyDown += SpaceObjProperties_KeyDown;
+
             Canvas canvas = Parent as Canvas;
 
             if (pos.X + ActualWidth < SystemParameters.PrimaryScreenWidth)
@@ -77,18 +80,6 @@ namespace SolarSystem.Classes.UI
             canvas.Children.Add(this);
         }
 
-        public static void ClosePrev(Canvas canvas)
-        {
-            foreach (UIElement el in canvas.Children)
-            {
-                if (el is SpaceObjProperties)
-                {
-                    canvas.Children.Remove(el);
-                    break;
-                }
-            }
-        }
-
         private void txtboxRadius_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -118,8 +109,37 @@ namespace SolarSystem.Classes.UI
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            Close();
+        }
+
+        private void SpaceObjProperties_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                spaceObj.Delete(spaceObj.ParentCanvas);
+                Close();
+            }
+        }
+
+        private void Close()
+        {
+            Window window = Window.GetWindow(this);
+            window.KeyDown -= SpaceObjProperties_KeyDown;
+
             Canvas parent = Parent as Canvas;
             parent.Children.Remove(this);
+        }
+
+        public static void ClosePrev(Canvas canvas)
+        {
+            foreach (UIElement el in canvas.Children)
+            {
+                if (el is SpaceObjProperties)
+                {
+                    (el as SpaceObjProperties).Close();
+                    break;
+                }
+            }
         }
     }
 }

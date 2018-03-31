@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:SolarSystem.Classes.UI"
              mc:Ignorable="d" 
              FontFamily="./#Montserrat"
-             Loaded="SpaceObjProperties_Loaded">
+             Loaded="SpaceObjProperties_Loaded"
+             KeyDown="SpaceObjProperties_KeyDown">
     <Grid>
 
         <Rectangle Fill="#99FFFFFF"
@@ -19,6 +20,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -100,6 +102,7 @@
                     Width="0"
                     Height="0"
                     IsCancel="True"
+                    IsDefault="True"
                     Click="btnSave_Click"/>
         
         </Grid>

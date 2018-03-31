@@ -17,14 +17,6 @@ namespace SolarSystem.Classes
 {
     public class Star : SpaceObject
     {
-        public int PlanetsCount
-        {
-            get
-            {
-                return planets.Count;
-            }
-        }
-
         public List<Planet> planets = new List<Planet>(); 
 
         public Star(string name, double radius, Point pos, string texturePath = ""): base(name, radius, texturePath)
@@ -39,6 +31,16 @@ namespace SolarSystem.Classes
             {
                 planet.Show(canvas);
             }
+        }
+
+        public override void Delete(Canvas canvas)
+        {
+            List<Planet> temp = new List<Planet>(planets);
+            foreach (Planet planet in temp)
+            {
+                planet.Delete(canvas);
+            }
+            base.Delete(canvas);
         }
     }
 }

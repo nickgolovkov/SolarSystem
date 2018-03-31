@@ -12,5 +12,11 @@ namespace SolarSystem.Classes
         {
             center.satellites.Add(this);
         }
+
+        protected override void DeleteFromCenterList()
+        {
+            Planet planet = center as Planet;
+            planet.satellites.Remove(this);
+        }
     }
 }

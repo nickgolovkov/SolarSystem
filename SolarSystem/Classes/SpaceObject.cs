@@ -48,6 +48,14 @@ namespace SolarSystem.Classes
             }
         }
 
+        public Canvas ParentCanvas
+        {
+            get
+            {
+                return spaceObject.Parent as Canvas;
+            }
+        }
+
         public virtual Point Position
         {
             get
@@ -100,7 +108,7 @@ namespace SolarSystem.Classes
 
         protected void ShowProperties(object sender, MouseButtonEventArgs e)
         {
-            Canvas parent = (spaceObject.Parent as Canvas).Parent as Canvas;
+            Canvas parent = ParentCanvas.Parent as Canvas;
             SpaceObjProperties spaceObjProperties = new UI.SpaceObjProperties(this, Mouse.GetPosition(parent), parent);
         }
 
@@ -120,6 +128,11 @@ namespace SolarSystem.Classes
             bm.EndInit();
 
             return bm;
+        }
+
+        public virtual void Delete(Canvas canvas)
+        {
+            canvas.Children.Remove(spaceObject);
         }
     }
 }

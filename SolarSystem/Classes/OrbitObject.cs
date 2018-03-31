@@ -17,7 +17,7 @@ namespace SolarSystem.Classes
 {
     public abstract class OrbitObject : SpaceObject
     {
-        SpaceObject center;
+        protected SpaceObject center;
 
         public virtual double Orbit
         {
@@ -99,5 +99,15 @@ namespace SolarSystem.Classes
             Canvas.SetLeft(spaceObject, center.Position.X + x - Radius);
             Canvas.SetTop(spaceObject, center.Position.Y + y - Radius);
         }
+
+        public override void Delete(Canvas canvas)
+        {
+            DeleteFromCenterList();
+
+            canvas.Children.Remove(orbitObject);
+            base.Delete(canvas);
+        }
+
+        protected abstract void DeleteFromCenterList();
     }
 }

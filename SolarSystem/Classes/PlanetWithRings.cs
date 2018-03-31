@@ -96,5 +96,11 @@ namespace SolarSystem.Classes
             base.SetPosition();
             SetRings();
         }
+
+        public override void Delete(Canvas canvas)
+        {
+            canvas.Children.Remove(ringsObject);
+            base.Delete(canvas);
+        }
     }
 }
