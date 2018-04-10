@@ -13,10 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SolarSystem.Classes.UI;
+using System.Runtime.Serialization;
 
 namespace SolarSystem.Classes
 {
-    public abstract class SpaceObject
+    [Serializable]
+    public abstract class SpaceObject : ISerializable
     {
         public string Name
         {
@@ -101,7 +103,7 @@ namespace SolarSystem.Classes
         
         protected Ellipse spaceObject = new Ellipse()
         {
-            Cursor = Cursors.Hand
+            Cursor = Cursors.Hand,
         };
 
         public SpaceObject()
@@ -109,6 +111,16 @@ namespace SolarSystem.Classes
             spaceObject.MouseRightButtonDown += ShowProperties;
         }
 
+        protected SpaceObject(SerializationInfo info, StreamingContext context)
+        {
+            Name = info.GetString("Name");
+            Radius = info.GetDouble("Radius");
+            Position = (Point)info.GetValue("Position", Position.GetType());
+            SerializeTexture = info.GetString("SerializeTexture");
+            
+            spaceObject.MouseRightButtonDown += ShowProperties;
+        }
+        
         public SpaceObject(string name, double radius, string texturePath = "")
         {
             Name = name;
@@ -152,6 +164,14 @@ namespace SolarSystem.Classes
         public virtual void Delete(Canvas canvas)
         {
             canvas.Children.Remove(spaceObject);
+        }
+        
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Name", Name);
+            info.AddValue("Radius", Radius);
+            info.AddValue("Position", Position);
+            info.AddValue("SerializeTexture", SerializeTexture);
         }
     }
 }

@@ -3,28 +3,29 @@
   <Class Name="SolarSystem.Classes.SpaceObject">
     <Position X="7.5" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>QABMAAAAAAAAAAAgAAAAAAQAIAEEAgAAAAIAAAAAAAA=</HashCode>
+      <HashCode>QABMAAAAAAAAAAAgAAAAAAQgIAEEAgAAAAIAAAAAAAA=</HashCode>
       <FileName>Classes\SpaceObject.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="SolarSystem.Classes.Star">
     <Position X="4.75" Y="4.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEMAAAQAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAEEAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Classes\Star.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SolarSystem.Classes.OrbitObject">
     <Position X="8.75" Y="4.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAABAAAAAggAAAAAAABEAEEAgAAAAAAAgBoAAA=</HashCode>
+      <HashCode>AAgAAAAABAAAAAggAAAAAAAhEAEEAgAAAAAAAgBoAAA=</HashCode>
       <FileName>Classes\OrbitObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SolarSystem.Classes.Planet">
     <Position X="7.25" Y="9.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAEECAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAgAAEECAAAAAAAAAAAAAA=</HashCode>
       <FileName>Classes\Planet.cs</FileName>
     </TypeIdentifier>
   </Class>

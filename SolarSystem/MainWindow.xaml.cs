@@ -123,21 +123,22 @@ namespace SolarSystem
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.E)
+            // Serialization
+            if (e.Key == Key.S)
             {
-                Serializer.XmlSerialize(stars[0], "sun.xml");
+                Serializer.BinarySerialize(stars.Last(), "sun.bin");
             }
-
-
+            
+            // Deserialization
             if (e.Key == Key.D)
             {
-                Star sun = Serializer.XmlDeserialize("sun.xml", typeof(Star)) as Star;
+                Star sun = Serializer.BinaryDeserialize("sun.bin") as Star;
                 stars.Add(sun);
                 sun.Show(canvasModel);
             }
 
-            // Остановка вращения планет
-            if (e.Key == Key.S)
+            // Pause/Play
+            if (e.Key == Key.P)
             {
                 if (timerRotate.IsEnabled)
                 {
@@ -149,7 +150,7 @@ namespace SolarSystem
                 }
             }
 
-            // Выход
+            // Quit
             if (e.Key == Key.Q)
             {
                 Application.Current.Shutdown();

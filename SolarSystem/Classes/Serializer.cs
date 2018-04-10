@@ -35,12 +35,44 @@ namespace SolarSystem.Classes
         public static SpaceObject XmlDeserialize(string path, Type type)
         {
             SpaceObject spaceObj;
+
             XmlSerializer xml = new XmlSerializer(type, new Type[] { typeof(PlanetWithRings) });
             using (FileStream myFileStream = new FileStream(path, FileMode.Open))
             {
                 spaceObj = (Star)xml.Deserialize(myFileStream);
             }
 
+            SetCenters(spaceObj);
+
+            return spaceObj;
+        }
+
+        public static void BinarySerialize(SpaceObject spaceObj, string path)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                formatter.Serialize(stream, spaceObj);
+            }
+        }
+
+        public static SpaceObject BinaryDeserialize(string path)
+        {
+            SpaceObject spaceObj;
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                spaceObj = formatter.Deserialize(stream) as SpaceObject;
+            }
+
+            SetCenters(spaceObj);
+
+            return spaceObj;
+        }
+
+        private static void SetCenters(SpaceObject spaceObj)
+        {
             if (spaceObj is Star)
             {
                 OrbitObject.SetCenters(spaceObj as Star);
@@ -49,8 +81,6 @@ namespace SolarSystem.Classes
             {
                 OrbitObject.SetCenters(spaceObj as Planet);
             }
-
-            return spaceObj;
         }
     }
 }

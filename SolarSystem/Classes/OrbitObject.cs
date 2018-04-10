@@ -12,9 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace SolarSystem.Classes
 {
+    [Serializable]
     public abstract class OrbitObject : SpaceObject
     {
         protected SpaceObject Center
@@ -50,7 +53,7 @@ namespace SolarSystem.Classes
         {
             get => base.Position;
         }
-
+        
         private Ellipse orbitObject = new Ellipse()
         {
             Stroke = new SolidColorBrush(Colors.White),
@@ -75,6 +78,12 @@ namespace SolarSystem.Classes
         private double angle = 0;
 
         public OrbitObject(): base() { }
+
+        protected OrbitObject(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+            Orbit = info.GetDouble("Orbit");
+            period = info.GetDouble("Period");
+        }
 
         public OrbitObject(string name, double radius, SpaceObject center, double orbit, double period, string texturePath = ""): base(name, radius, texturePath)
         {
@@ -144,6 +153,13 @@ namespace SolarSystem.Classes
             {
                 satellite.Center = planet;
             }
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("Orbit", Orbit);
+            info.AddValue("Period", period);
         }
     }
 }

@@ -12,14 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace SolarSystem.Classes
 {
+    [Serializable]
     public class Planet : OrbitObject
     {
         public List<Satellite> satellites = new List<Satellite>();
 
         public Planet(): base() { }
+
+        protected Planet(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+            satellites = info.GetValue("Satellites", satellites.GetType()) as List<Satellite>;
+        }
 
         public Planet(string name, double radius, Star center, double orbit, double period, string texturePath = ""): base(name, radius, center, orbit, period, texturePath)
         {
@@ -49,6 +57,12 @@ namespace SolarSystem.Classes
         {
             Star star = Center as Star;
             star.planets.Remove(this);
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("Satellites", satellites);
         }
     }
 }

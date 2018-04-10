@@ -12,9 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace SolarSystem.Classes
 {
+    [Serializable]
     public class PlanetWithRings : Planet
     {
         public override double Orbit
@@ -69,7 +72,7 @@ namespace SolarSystem.Classes
                 ringsObject.Fill = new ImageBrush(value);
             }
         }
-
+        
         private Ellipse ringsObject = new Ellipse()
         {
             Cursor = Cursors.Hand
@@ -77,6 +80,14 @@ namespace SolarSystem.Classes
 
         public PlanetWithRings(): base()
         {
+            ringsObject.MouseRightButtonDown += ShowProperties;
+        }
+
+        protected PlanetWithRings(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+            RingsRadius = info.GetDouble("RingsRadius");
+            SerializeRingsTexture = info.GetString("SerializeRingsTexture");
+
             ringsObject.MouseRightButtonDown += ShowProperties;
         }
 
@@ -120,6 +131,13 @@ namespace SolarSystem.Classes
         {
             canvas.Children.Remove(ringsObject);
             base.Delete(canvas);
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("RingsRadius", RingsRadius);
+            info.AddValue("SerializeRingsTexture", SerializeRingsTexture);
         }
     }
 }
