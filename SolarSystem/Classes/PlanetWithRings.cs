@@ -32,7 +32,7 @@ namespace SolarSystem.Classes
                 SetRingsPosition();
             }
         }
-
+        
         public double RingsRadius
         {
             get
@@ -45,7 +45,7 @@ namespace SolarSystem.Classes
                 ringsObject.Height = value * 2;
             }
         }
-
+        
         public string SerializeRingsTexture
         {
             get

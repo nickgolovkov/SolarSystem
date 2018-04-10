@@ -33,7 +33,7 @@ namespace SolarSystem.Classes
             }
         }
         private SpaceObject center;
-
+        
         public virtual double Orbit
         {
             get
@@ -48,7 +48,7 @@ namespace SolarSystem.Classes
                 SetPosition();
             }
         }
-
+        
         public override Point Position
         {
             get => base.Position;
@@ -60,7 +60,7 @@ namespace SolarSystem.Classes
             Opacity = 0.5,
             StrokeThickness = 0.6
         };
-
+        
         public double AngularVelocity
         {
             get
@@ -72,7 +72,7 @@ namespace SolarSystem.Classes
                 period = Math.PI * 2 / value;
             }
         }
-
+        
         public double period;
         
         private double angle = 0;

@@ -26,7 +26,10 @@ namespace SolarSystem.Classes
 
         protected Planet(SerializationInfo info, StreamingContext context): base(info, context)
         {
-            satellites = info.GetValue("Satellites", satellites.GetType()) as List<Satellite>;
+            for (int i = 0; i < info.GetInt32("SatellitesCount"); i++)
+            {
+                satellites.Add(info.GetValue("Satellite" + i.ToString(), typeof(Satellite)) as Satellite);
+            }
         }
 
         public Planet(string name, double radius, Star center, double orbit, double period, string texturePath = ""): base(name, radius, center, orbit, period, texturePath)
@@ -62,7 +65,11 @@ namespace SolarSystem.Classes
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Satellites", satellites);
+            info.AddValue("SatellitesCount", satellites.Count);
+            for (int i = 0; i < satellites.Count; i++)
+            {
+                info.AddValue("Satellite" + i.ToString(), satellites[i]);
+            }
         }
     }
 }

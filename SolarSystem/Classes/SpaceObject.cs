@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SolarSystem.Classes.UI;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace SolarSystem.Classes
 {
@@ -32,7 +33,7 @@ namespace SolarSystem.Classes
                 
             }
         }
-
+        
         public double Radius
         {
             get
@@ -57,7 +58,7 @@ namespace SolarSystem.Classes
                 return spaceObject.Parent as Canvas;
             }
         }
-
+        
         public virtual Point Position
         {
             get
@@ -73,7 +74,7 @@ namespace SolarSystem.Classes
                 Canvas.SetTop(spaceObject, value.Y - Radius);
             }
         }
-
+        
         public string SerializeTexture
         {
             get
@@ -115,7 +116,7 @@ namespace SolarSystem.Classes
         {
             Name = info.GetString("Name");
             Radius = info.GetDouble("Radius");
-            Position = (Point)info.GetValue("Position", Position.GetType());
+            Position = (Point)info.GetValue("Position", typeof(Point));
             SerializeTexture = info.GetString("SerializeTexture");
             
             spaceObject.MouseRightButtonDown += ShowProperties;

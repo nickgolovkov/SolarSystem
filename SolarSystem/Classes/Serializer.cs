@@ -16,6 +16,7 @@ using System.IO;
 using System.Windows.Threading;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using System.Runtime.Serialization.Json;
 using SolarSystem.Classes;
 using SolarSystem.Classes.UI;
 
@@ -37,9 +38,9 @@ namespace SolarSystem.Classes
             SpaceObject spaceObj;
 
             XmlSerializer xml = new XmlSerializer(type, new Type[] { typeof(PlanetWithRings) });
-            using (FileStream myFileStream = new FileStream(path, FileMode.Open))
+            using (FileStream stream = new FileStream(path, FileMode.Open))
             {
-                spaceObj = (Star)xml.Deserialize(myFileStream);
+                spaceObj = (Star)xml.Deserialize(stream);
             }
 
             SetCenters(spaceObj);
@@ -64,6 +65,30 @@ namespace SolarSystem.Classes
             using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate))
             {
                 spaceObj = formatter.Deserialize(stream) as SpaceObject;
+            }
+
+            SetCenters(spaceObj);
+
+            return spaceObj;
+        }
+
+        public static void JsonSerialize(SpaceObject spaceObj, string path)
+        {
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(spaceObj.GetType(), new Type[] { typeof(Planet), typeof(Satellite), typeof(PlanetWithRings), typeof(Point) });
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                jsonFormatter.WriteObject(stream, spaceObj);
+            }
+        }
+
+        public static SpaceObject JsonDeserialize(string path, Type type)
+        {
+            SpaceObject spaceObj;
+
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(type, new Type[] { typeof(Planet), typeof(Satellite), typeof(PlanetWithRings), typeof(Point)});
+            using (FileStream stream = new FileStream(path, FileMode.Open))
+            {
+                spaceObj = (Star)jsonFormatter.ReadObject(stream);
             }
 
             SetCenters(spaceObj);

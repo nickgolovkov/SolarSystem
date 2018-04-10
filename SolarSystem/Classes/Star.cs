@@ -26,7 +26,10 @@ namespace SolarSystem.Classes
 
         protected Star(SerializationInfo info, StreamingContext context): base(info, context)
         {
-            planets = info.GetValue("Planets", planets.GetType()) as List<Planet>;
+            for (int i = 0; i < info.GetInt32("PlanetsCount"); i++)
+            {
+                planets.Add(info.GetValue("Planet" + i.ToString(), typeof(Planet)) as Planet);
+            }
         }
 
         public Star(string name, double radius, Point pos, string texturePath = ""): base(name, radius, texturePath)
@@ -56,7 +59,11 @@ namespace SolarSystem.Classes
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("Planets", planets);
+            info.AddValue("PlanetsCount", planets.Count);
+            for (int i = 0; i < planets.Count; i++)
+            {
+                info.AddValue("Planet" + i.ToString(), planets[i]);
+            }
         }
     }
 }
