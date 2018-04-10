@@ -8,6 +8,8 @@ namespace SolarSystem.Classes
 {
     public class Satellite : OrbitObject
     {
+        public Satellite(): base() { }
+
         public Satellite(string name, double radius, Planet center, double orbit, double period, string texturePath = ""): base(name, radius, center, orbit, period, texturePath)
         {
             center.satellites.Add(this);
@@ -15,7 +17,7 @@ namespace SolarSystem.Classes
 
         protected override void DeleteFromCenterList()
         {
-            Planet planet = center as Planet;
+            Planet planet = Center as Planet;
             planet.satellites.Remove(this);
         }
     }

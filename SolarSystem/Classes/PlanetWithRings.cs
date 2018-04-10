@@ -26,7 +26,7 @@ namespace SolarSystem.Classes
             set
             {
                 base.Orbit = value;
-                SetRings();
+                SetRingsPosition();
             }
         }
 
@@ -43,12 +43,26 @@ namespace SolarSystem.Classes
             }
         }
 
+        public string SerializeRingsTexture
+        {
+            get
+            {
+                ImageSourceConverter converter = new ImageSourceConverter();
+                return converter.ConvertToString(RingsTexture);
+            }
+            set
+            {
+                ImageSourceConverter converter = new ImageSourceConverter();
+                RingsTexture = converter.ConvertFromString(value) as ImageSource;
+            }
+        }
+        
         private ImageSource RingsTexture
         {
             get
             {
-                BrushConverter brushConverter = new BrushConverter();
-                return (ImageSource)brushConverter.ConvertTo(ringsObject.Fill, typeof(ImageSource)); ;
+                ImageBrush imgBrush = ringsObject.Fill as ImageBrush;
+                return imgBrush.ImageSource;
             }
             set
             {
@@ -60,6 +74,11 @@ namespace SolarSystem.Classes
         {
             Cursor = Cursors.Hand
         };
+
+        public PlanetWithRings(): base()
+        {
+            ringsObject.MouseRightButtonDown += ShowProperties;
+        }
 
         public PlanetWithRings(string name, double radius, double ringsRadius, Star center, double orbit, double period, string texturePath = "", string ringsTexturePath = ""): base(name, radius, center, orbit, period, texturePath)
         {
@@ -74,7 +93,7 @@ namespace SolarSystem.Classes
                 RingsTexture = LoadTexture(texturePath);
             }
 
-            SetRings();
+            SetRingsPosition();
 
             ringsObject.MouseRightButtonDown += ShowProperties;
         }
@@ -85,7 +104,7 @@ namespace SolarSystem.Classes
             canvas.Children.Add(ringsObject);
         }
 
-        private void SetRings()
+        private void SetRingsPosition()
         {
             Canvas.SetLeft(ringsObject, Canvas.GetLeft(spaceObject) + Radius - RingsRadius);
             Canvas.SetTop(ringsObject, Canvas.GetTop(spaceObject) + Radius - RingsRadius);
@@ -94,7 +113,7 @@ namespace SolarSystem.Classes
         protected override void SetPosition()
         {
             base.SetPosition();
-            SetRings();
+            SetRingsPosition();
         }
 
         public override void Delete(Canvas canvas)

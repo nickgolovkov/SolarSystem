@@ -72,23 +72,42 @@ namespace SolarSystem.Classes
             }
         }
 
+        public string SerializeTexture
+        {
+            get
+            {
+                ImageSourceConverter converter = new ImageSourceConverter();
+                return converter.ConvertToString(Texture);
+            }
+            set
+            {
+                ImageSourceConverter converter = new ImageSourceConverter();
+                Texture = converter.ConvertFromString(value) as ImageSource;
+            }
+        }
+
         private ImageSource Texture
         {
             get
             {
-                BrushConverter brushConverter = new BrushConverter();
-                return (ImageSource)brushConverter.ConvertTo(spaceObject.Fill, typeof(ImageSource)); ;
+                ImageBrush imgBrush = spaceObject.Fill as ImageBrush;
+                return imgBrush.ImageSource;
             }
             set
             {
                 spaceObject.Fill = new ImageBrush(value);
             }
         }
-
+        
         protected Ellipse spaceObject = new Ellipse()
         {
             Cursor = Cursors.Hand
         };
+
+        public SpaceObject()
+        {
+            spaceObject.MouseRightButtonDown += ShowProperties;
+        }
 
         public SpaceObject(string name, double radius, string texturePath = "")
         {

@@ -78,6 +78,7 @@
     <Compile Include="Classes\Planet.cs" />
     <Compile Include="Classes\PlanetWithRings.cs" />
     <Compile Include="Classes\Satellite.cs" />
+    <Compile Include="Classes\Serializer.cs" />
     <Compile Include="Classes\SpaceObject.cs" />
     <Compile Include="Classes\Star.cs" />
     <Compile Include="Classes\UI\SpaceObjProperties.xaml.cs">

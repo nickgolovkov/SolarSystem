@@ -17,7 +17,19 @@ namespace SolarSystem.Classes
 {
     public abstract class OrbitObject : SpaceObject
     {
-        protected SpaceObject center;
+        protected SpaceObject Center
+        {
+            get
+            {
+                return center;
+            }
+            set
+            {
+                center = value;
+                SetPosition();
+            }
+        }
+        private SpaceObject center;
 
         public virtual double Orbit
         {
@@ -62,10 +74,12 @@ namespace SolarSystem.Classes
         
         private double angle = 0;
 
+        public OrbitObject(): base() { }
+
         public OrbitObject(string name, double radius, SpaceObject center, double orbit, double period, string texturePath = ""): base(name, radius, texturePath)
         {
             this.period = period;
-            this.center = center;
+            this.Center = center;
             Orbit = orbit;
 
             if (this is Satellite)
@@ -90,14 +104,19 @@ namespace SolarSystem.Classes
 
         protected virtual void SetPosition()
         {
-            Canvas.SetLeft(orbitObject, center.Position.X - Orbit);
-            Canvas.SetTop(orbitObject, center.Position.Y - Orbit);
+            if (Center == null)
+            {
+                return;
+            }
+
+            Canvas.SetLeft(orbitObject, Center.Position.X - Orbit);
+            Canvas.SetTop(orbitObject, Center.Position.Y - Orbit);
 
             double x = Math.Cos(angle) * Orbit;
             double y = Math.Sin(angle) * Orbit;
 
-            Canvas.SetLeft(spaceObject, center.Position.X + x - Radius);
-            Canvas.SetTop(spaceObject, center.Position.Y + y - Radius);
+            Canvas.SetLeft(spaceObject, Center.Position.X + x - Radius);
+            Canvas.SetTop(spaceObject, Center.Position.Y + y - Radius);
         }
 
         public override void Delete(Canvas canvas)
@@ -109,5 +128,22 @@ namespace SolarSystem.Classes
         }
 
         protected abstract void DeleteFromCenterList();
+
+        public static void SetCenters(Star star)
+        {
+            foreach (Planet planet in star.planets)
+            {
+                planet.Center = star;
+                SetCenters(planet);
+            }
+        }
+
+        public static void SetCenters(Planet planet)
+        {
+            foreach (Satellite satellite in planet.satellites)
+            {
+                satellite.Center = planet;
+            }
+        }
     }
 }

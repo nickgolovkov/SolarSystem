@@ -17,7 +17,9 @@ namespace SolarSystem.Classes
 {
     public class Star : SpaceObject
     {
-        public List<Planet> planets = new List<Planet>(); 
+        public List<Planet> planets = new List<Planet>();
+
+        public Star(): base() { }
 
         public Star(string name, double radius, Point pos, string texturePath = ""): base(name, radius, texturePath)
         {

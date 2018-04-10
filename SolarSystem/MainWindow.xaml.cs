@@ -12,7 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 using System.Windows.Threading;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 using SolarSystem.Classes;
 using SolarSystem.Classes.UI;
 
@@ -24,8 +27,7 @@ namespace SolarSystem
     public partial class MainWindow : Window
     {
         // Масштабы
-        // Звезды 1 : 1 тыс. км
-        // Планеты и спутники 1 : 1 тыс. км
+        // Радиус звезд, планет и спутников 1 : 1 тыс. км
         // Орбиты планет 1 : 1 млн. км
         // Орбиты спутнико 1 : 100 тыс. км 
 
@@ -51,7 +53,7 @@ namespace SolarSystem
             Planet uranus = new Planet("Uranus", 25.3, sun, sun.Radius + 2871, 840 * 365);
             Planet neptune = new Planet("Neptune", 24.6, sun, sun.Radius + 4498, 1650 * 365);
 
-            sun.Show(canvasModel);
+            //sun.Show(canvasModel);
 
             stars.Add(sun);
         }
@@ -121,6 +123,19 @@ namespace SolarSystem
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.E)
+            {
+                Serializer.XmlSerialize(stars[0], "sun.xml");
+            }
+
+
+            if (e.Key == Key.D)
+            {
+                Star sun = Serializer.XmlDeserialize("sun.xml", typeof(Star)) as Star;
+                stars.Add(sun);
+                sun.Show(canvasModel);
+            }
+
             // Остановка вращения планет
             if (e.Key == Key.S)
             {
