@@ -20,6 +20,20 @@ namespace SolarSystem.Classes
     [Serializable]
     public class PlanetWithRings : Planet
     {
+        public override double Radius
+        {
+            get
+            {
+                return base.Radius;
+            }
+            set
+            {
+                double coef = RingsRadius / Radius;
+                base.Radius = value;
+                RingsRadius = coef * Radius;
+            }
+        }
+
         public override double Orbit
         {
             get

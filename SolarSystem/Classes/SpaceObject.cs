@@ -34,7 +34,7 @@ namespace SolarSystem.Classes
             }
         }
         
-        public double Radius
+        public virtual double Radius
         {
             get
             {
