@@ -63,6 +63,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Classes\UI\SpaceObjChildren.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Classes\UI\SpaceObjChildrenItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Classes\UI\SpaceObjProperties.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -75,13 +83,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\ICentral.cs" />
     <Compile Include="Classes\OrbitObject.cs" />
     <Compile Include="Classes\Planet.cs" />
     <Compile Include="Classes\PlanetWithRings.cs" />
+    <Compile Include="Classes\Randomizer.cs" />
     <Compile Include="Classes\Satellite.cs" />
     <Compile Include="Classes\Serializer.cs" />
     <Compile Include="Classes\SpaceObject.cs" />
     <Compile Include="Classes\Star.cs" />
+    <Compile Include="Classes\UI\IClosableUI.cs" />
+    <Compile Include="Classes\UI\SpaceObjChildren.xaml.cs">
+      <DependentUpon>SpaceObjChildren.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\UI\SpaceObjChildrenItem.xaml.cs">
+      <DependentUpon>SpaceObjChildrenItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Classes\UI\SpaceObjProperties.xaml.cs">
       <DependentUpon>SpaceObjProperties.xaml</DependentUpon>
     </Compile>
@@ -118,6 +135,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Classes\UI\Texture.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

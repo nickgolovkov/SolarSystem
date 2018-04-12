@@ -14,15 +14,19 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
+using SolarSystem.Classes.UI;
 
 namespace SolarSystem.Classes
 {
     [Serializable]
-    public class Star : SpaceObject
+    public class Star : SpaceObject, ICentral
     {
         public List<Planet> planets = new List<Planet>();
 
-        public Star(): base() { }
+        public Star(): base()
+        {
+            spaceObject.MouseLeftButtonDown += ShowChildren;
+        }
 
         protected Star(SerializationInfo info, StreamingContext context): base(info, context)
         {
@@ -30,11 +34,15 @@ namespace SolarSystem.Classes
             {
                 planets.Add(info.GetValue("Planet" + i.ToString(), typeof(Planet)) as Planet);
             }
+
+            spaceObject.MouseLeftButtonDown += ShowChildren;
         }
 
         public Star(string name, double radius, Point pos, string texturePath = ""): base(name, radius, texturePath)
         {
             Position = pos;
+
+            spaceObject.MouseLeftButtonDown += ShowChildren;
         }
 
         public override void Show(Canvas canvas)
@@ -64,6 +72,28 @@ namespace SolarSystem.Classes
             {
                 info.AddValue("Planet" + i.ToString(), planets[i]);
             }
+        }
+
+        public List<OrbitObject> GetOrbitObjects()
+        {
+            return new List<OrbitObject>(planets);
+        }
+
+        public void AddOrbitObject(OrbitObject orbitObject)
+        {
+            planets.Add((Planet)orbitObject);
+            orbitObject.Center = this;
+        }
+
+        public void ShowChildren(object sender, MouseButtonEventArgs e)
+        {
+            Canvas parent = ParentCanvas.Parent as Canvas;
+            SpaceObjChildren spaceObjChildren = new UI.SpaceObjChildren(this, Mouse.GetPosition(parent), parent);
+        }
+
+        public Type GetOrbitObjectsType()
+        {
+            return planets.GetType().GetGenericArguments().Single();
         }
     }
 }

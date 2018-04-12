@@ -14,13 +14,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
+using System.Xml.Serialization;
 
 namespace SolarSystem.Classes
 {
     [Serializable]
     public abstract class OrbitObject : SpaceObject
     {
-        protected SpaceObject Center
+        [XmlIgnore]
+        public SpaceObject Center
         {
             get
             {
@@ -75,7 +77,7 @@ namespace SolarSystem.Classes
         
         public double period;
         
-        private double angle = 0;
+        private double angle = Randomizer.GetRandomAngle();
 
         public OrbitObject(): base() { }
 

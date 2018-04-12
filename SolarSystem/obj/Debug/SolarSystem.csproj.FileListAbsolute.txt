@@ -36,3 +36,7 @@ D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\bin\Debug\Mat
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\bin\Debug\MaterialDesignThemes.Wpf.xml
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\App.baml
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\SolarSystem.csproj.CopyComplete
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjChildren.g.cs
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjChildrenItem.g.cs
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjChildren.baml
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjChildrenItem.baml

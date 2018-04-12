@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SolarSystem.Classes.UI;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 using System.Runtime.Serialization.Json;
 
 namespace SolarSystem.Classes
@@ -89,7 +90,8 @@ namespace SolarSystem.Classes
             }
         }
 
-        private ImageSource Texture
+        [XmlIgnore]
+        public ImageSource Texture
         {
             get
             {

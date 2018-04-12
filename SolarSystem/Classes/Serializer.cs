@@ -40,7 +40,7 @@ namespace SolarSystem.Classes
             XmlSerializer xml = new XmlSerializer(type, new Type[] { typeof(PlanetWithRings) });
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
-                spaceObj = (Star)xml.Deserialize(stream);
+                spaceObj = xml.Deserialize(stream) as SpaceObject;
             }
 
             SetCenters(spaceObj);
@@ -88,7 +88,7 @@ namespace SolarSystem.Classes
             DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(type, new Type[] { typeof(Planet), typeof(Satellite), typeof(PlanetWithRings), typeof(Point)});
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
-                spaceObj = (Star)jsonFormatter.ReadObject(stream);
+                spaceObj = jsonFormatter.ReadObject(stream) as SpaceObject;
             }
 
             SetCenters(spaceObj);
@@ -96,6 +96,7 @@ namespace SolarSystem.Classes
             return spaceObj;
         }
 
+        // Переделать через ICentrable
         private static void SetCenters(SpaceObject spaceObj)
         {
             if (spaceObj is Star)

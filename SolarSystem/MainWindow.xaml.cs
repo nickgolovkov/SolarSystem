@@ -29,7 +29,7 @@ namespace SolarSystem
         // Масштабы
         // Радиус звезд, планет и спутников 1 : 1 тыс. км
         // Орбиты планет 1 : 1 млн. км
-        // Орбиты спутнико 1 : 100 тыс. км 
+        // Орбиты спутнико 1 : 100 тыс. км
 
         public MainWindow()
         {
@@ -59,7 +59,7 @@ namespace SolarSystem
         }
 
         // Движение камеры
-        private DispatcherTimer timerMove;
+        public DispatcherTimer timerMove;
         private void InitMoveTimer()
         {
             const int INTERVAL = 10;
@@ -138,7 +138,7 @@ namespace SolarSystem
             }
 
             // Pause/Play
-            if (e.Key == Key.P)
+            if (e.Key == Key.P || e.Key == Key.Space)
             {
                 if (timerRotate.IsEnabled)
                 {
@@ -178,6 +178,15 @@ namespace SolarSystem
                 {
                     canvasModel.RenderTransform = new ScaleTransform(1 + scaleDelta, 1 + scaleDelta, ActualWidth / 2, ActualHeight / 2);
                 }
+            }
+        }
+        
+        public static void ClosePrevUI(Canvas canvas)
+        {
+            List<IClosableUI> elements = new List<IClosableUI>(canvas.Children.OfType<IClosableUI>());
+            foreach (IClosableUI el in elements)
+            {
+                el.Close();
             }
         }
     }

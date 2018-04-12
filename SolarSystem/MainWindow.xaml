@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SolarSystem"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="{DynamicResource MaterialDesignPaper}"
         mc:Ignorable="d"
         Title="MainWindow" 
         Width="1280" 
@@ -16,10 +15,13 @@
         Loaded="Window_Loaded"
         KeyDown="Window_KeyDown"
         MouseWheel="Window_MouseWheel">
-    
+    <Window.Background>
+        <ImageBrush ImageSource="Classes/UI/Texture.jpg"/>
+    </Window.Background>
+
     <Grid>
 
-        <Canvas Background="Black">
+        <Canvas Background="#CC000000">
             <Canvas x:Name="canvasModel"
                     Canvas.Left="0"
                     Canvas.Top="0">

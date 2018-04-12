@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\App.xaml
-2-1697319318
+4-1637543891
 
-13838770179
+181480103140
 18-1205244443
-Classes\UI\SpaceObjProperties.xaml;MainWindow.xaml;
+Classes\UI\SpaceObjChildren.xaml;Classes\UI\SpaceObjChildrenItem.xaml;Classes\UI\SpaceObjProperties.xaml;MainWindow.xaml;
 
 False
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Win32;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +20,9 @@ namespace SolarSystem.Classes.UI
     /// <summary>
     /// Логика взаимодействия для SpaceObjProperties.xaml
     /// </summary>
-    public partial class SpaceObjProperties : UserControl
+    public partial class SpaceObjProperties : UserControl, IClosableUI
     {
-        SpaceObject spaceObj;
+        public SpaceObject spaceObj;
         Point pos;
 
         public SpaceObjProperties(SpaceObject spaceObj, Point pos, Canvas canvas)
@@ -43,9 +45,6 @@ namespace SolarSystem.Classes.UI
 
         private void SpaceObjProperties_Loaded(object sender, RoutedEventArgs e)
         {
-            Window window = Window.GetWindow(this);
-            window.KeyDown += SpaceObjProperties_KeyDown;
-
             Canvas canvas = Parent as Canvas;
 
             if (pos.X + ActualWidth < SystemParameters.PrimaryScreenWidth)
@@ -76,7 +75,7 @@ namespace SolarSystem.Classes.UI
         
         private void Show(Canvas canvas)
         {
-            ClosePrev(canvas);
+            MainWindow.ClosePrevUI(canvas);
             canvas.Children.Add(this);
         }
 
@@ -107,39 +106,49 @@ namespace SolarSystem.Classes.UI
             catch { }
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void SpaceObjProperties_KeyDown(object sender, KeyEventArgs e)
+        public void Close()
         {
-            if (e.Key == Key.Delete)
-            {
-                spaceObj.Delete(spaceObj.ParentCanvas);
-                Close();
-            }
-        }
-
-        private void Close()
-        {
-            Window window = Window.GetWindow(this);
-            window.KeyDown -= SpaceObjProperties_KeyDown;
-
             Canvas parent = Parent as Canvas;
             parent.Children.Remove(this);
         }
 
-        public static void ClosePrev(Canvas canvas)
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            foreach (UIElement el in canvas.Children)
+            if (!(bool)chboxBin.IsChecked && !(bool)chboxJson.IsChecked && !(bool)chboxXml.IsChecked)
             {
-                if (el is SpaceObjProperties)
+                return;
+            }
+            
+            MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
+            mainWindow.timerMove.Stop();
+
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = spaceObj.Name;
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                if ((bool)chboxBin.IsChecked)
                 {
-                    (el as SpaceObjProperties).Close();
-                    break;
+                    Serializer.BinarySerialize(spaceObj, dlg.FileName + ".bin");
+                }
+                if ((bool)chboxJson.IsChecked)
+                {
+                    Serializer.JsonSerialize(spaceObj, dlg.FileName + ".json");
+                }
+                if ((bool)chboxXml.IsChecked)
+                {
+                    Serializer.XmlSerialize(spaceObj, dlg.FileName + ".xml");
                 }
             }
+            
+            mainWindow.timerMove.Start();
         }
     }
 }

@@ -95,6 +95,7 @@ namespace SolarSystem.Classes
         public PlanetWithRings(): base()
         {
             ringsObject.MouseRightButtonDown += ShowProperties;
+            ringsObject.MouseLeftButtonDown += ShowChildren;
         }
 
         protected PlanetWithRings(SerializationInfo info, StreamingContext context): base(info, context)
@@ -103,6 +104,7 @@ namespace SolarSystem.Classes
             SerializeRingsTexture = info.GetString("SerializeRingsTexture");
 
             ringsObject.MouseRightButtonDown += ShowProperties;
+            ringsObject.MouseLeftButtonDown += ShowChildren;
         }
 
         public PlanetWithRings(string name, double radius, double ringsRadius, Star center, double orbit, double period, string texturePath = "", string ringsTexturePath = ""): base(name, radius, center, orbit, period, texturePath)
@@ -121,6 +123,7 @@ namespace SolarSystem.Classes
             SetRingsPosition();
 
             ringsObject.MouseRightButtonDown += ShowProperties;
+            ringsObject.MouseLeftButtonDown += ShowChildren;
         }
 
         public override void Show(Canvas canvas)
