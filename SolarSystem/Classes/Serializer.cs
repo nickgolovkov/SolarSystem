@@ -33,14 +33,22 @@ namespace SolarSystem.Classes
             }
         }
 
-        public static SpaceObject XmlDeserialize(string path, Type type)
+        public static SpaceObject XmlDeserialize(string path, IEnumerable<Type> types)
         {
-            SpaceObject spaceObj;
+            SpaceObject spaceObj = null;
 
-            XmlSerializer xml = new XmlSerializer(type, new Type[] { typeof(PlanetWithRings) });
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            foreach (Type type in types)
             {
-                spaceObj = xml.Deserialize(stream) as SpaceObject;
+                try
+                {
+                    XmlSerializer xml = new XmlSerializer(type, new Type[] { typeof(PlanetWithRings) });
+                    using (FileStream stream = new FileStream(path, FileMode.Open))
+                    {
+                        spaceObj = (SpaceObject)xml.Deserialize(stream);
+                    }
+                    break;
+                }
+                catch { }
             }
 
             SetCenters(spaceObj);
@@ -64,7 +72,7 @@ namespace SolarSystem.Classes
             BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate))
             {
-                spaceObj = formatter.Deserialize(stream) as SpaceObject;
+                spaceObj = (SpaceObject)formatter.Deserialize(stream);
             }
 
             SetCenters(spaceObj);
@@ -88,15 +96,14 @@ namespace SolarSystem.Classes
             DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(type, new Type[] { typeof(Planet), typeof(Satellite), typeof(PlanetWithRings), typeof(Point)});
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
-                spaceObj = jsonFormatter.ReadObject(stream) as SpaceObject;
+                spaceObj = (SpaceObject)jsonFormatter.ReadObject(stream);
             }
-
+            
             SetCenters(spaceObj);
 
             return spaceObj;
         }
-
-        // Переделать через ICentrable
+        
         private static void SetCenters(SpaceObject spaceObj)
         {
             if (spaceObj is Star)

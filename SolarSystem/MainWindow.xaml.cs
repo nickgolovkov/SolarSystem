@@ -123,6 +123,11 @@ namespace SolarSystem
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (Keyboard.GetKeyStates(Key.LeftCtrl) != KeyStates.Down)
+            {
+                return;
+            }
+
             // Serialization
             if (e.Key == Key.S)
             {

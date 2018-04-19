@@ -130,27 +130,42 @@ namespace SolarSystem.Classes.UI
                 try
                 {
                     SpaceObject spaceObj = null;
+                    Type type = centralObject.GetOrbitObjectsType();
+
                     switch (System.IO.Path.GetExtension(dlg.FileName).ToLower())
                     {
                         case ".xml":
-                            // Не десериализует PlanetWithRings
-                            spaceObj = Serializer.XmlDeserialize(dlg.FileName, centralObject.GetOrbitObjectsType());
+                            if (type == typeof(Planet))
+                            {
+                                spaceObj = Serializer.XmlDeserialize(dlg.FileName, new Type[] { type, typeof(PlanetWithRings)});
+                            }
+                            else
+                            {
+                                spaceObj = Serializer.XmlDeserialize(dlg.FileName, new Type[] { type });
+                            }
                             break;
 
                         case ".json":
                             // Не определяет тип десериализуемого
-                            spaceObj = Serializer.JsonDeserialize(dlg.FileName, centralObject.GetOrbitObjectsType());
+                            spaceObj = Serializer.JsonDeserialize(dlg.FileName, type);
                             break;
 
                         case ".bin":
                             spaceObj = Serializer.BinaryDeserialize(dlg.FileName);
                             break;
                     }
-                    centralObject.AddOrbitObject(spaceObj as OrbitObject);
-                    spaceObj.Show((centralObject as SpaceObject).ParentCanvas);
+                    if (spaceObj == null)
+                    {
+                        throw new Exception();
+                    }
+                    centralObject.AddOrbitObject((OrbitObject)spaceObj);
+                    spaceObj.Show(((SpaceObject)centralObject).ParentCanvas);
                     ShowChildrenList();
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error");
+                }
             }
 
             mainWindow.timerMove.Start();

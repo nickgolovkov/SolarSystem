@@ -32,7 +32,7 @@ namespace SolarSystem.Classes.UI
             this.spaceObj = spaceObj;
             this.pos = pos;
 
-            txtblockName.Text = spaceObj.Name;
+            txtboxName.Text = spaceObj.Name;
             txtboxRadius.Text = spaceObj.Radius.ToString();
 
             if (spaceObj is OrbitObject)
@@ -77,6 +77,15 @@ namespace SolarSystem.Classes.UI
         {
             MainWindow.ClosePrevUI(canvas);
             canvas.Children.Add(this);
+        }
+
+        private void txtboxName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                spaceObj.Name = txtboxName.Text;
+            }
+            catch { }
         }
 
         private void txtboxRadius_TextChanged(object sender, TextChangedEventArgs e)
@@ -148,6 +157,31 @@ namespace SolarSystem.Classes.UI
                 }
             }
             
+            mainWindow.timerMove.Start();
+        }
+
+        private void btnOpenTexture_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
+            mainWindow.timerMove.Stop();
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                try
+                {
+                    spaceObj.Texture = SpaceObject.LoadTexture(dlg.FileName);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
             mainWindow.timerMove.Start();
         }
     }
