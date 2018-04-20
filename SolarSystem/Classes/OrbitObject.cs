@@ -140,23 +140,6 @@ namespace SolarSystem.Classes
 
         protected abstract void DeleteFromCenterList();
 
-        public static void SetCenters(Star star)
-        {
-            foreach (Planet planet in star.planets)
-            {
-                planet.Center = star;
-                SetCenters(planet);
-            }
-        }
-
-        public static void SetCenters(Planet planet)
-        {
-            foreach (Satellite satellite in planet.satellites)
-            {
-                satellite.Center = planet;
-            }
-        }
-
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

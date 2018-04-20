@@ -41,12 +41,18 @@ namespace SolarSystem.Classes.UI
         private void ShowChildrenList()
         {
             listboxOrbitObjects.Items.Clear();
-            List<OrbitObject> orbitObj = centralObject.GetOrbitObjects();
-            orbitObj.Sort((x, y) => x.Orbit.CompareTo(y.Orbit));
+            List<OrbitObject> orbitObjects = centralObject.GetOrbitObjects();
+            orbitObjects.Sort((x, y) => x.Orbit.CompareTo(y.Orbit));
 
-            foreach (OrbitObject orbitObject in orbitObj)
+            foreach (OrbitObject orbitObject in orbitObjects)
             {
-                listboxOrbitObjects.Items.Add(new SpaceObjChildrenItem(orbitObject));
+                SpaceObjChildrenItem item = new SpaceObjChildrenItem(orbitObject);
+                item.MouseRightButtonDown += orbitObject.ShowProperties;
+                if (orbitObject is ICentral)
+                {
+                    item.MouseLeftButtonDown += (orbitObject as ICentral).ShowChildren;
+                }
+                listboxOrbitObjects.Items.Add(item);
             }
         }
 

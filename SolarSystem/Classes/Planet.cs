@@ -85,6 +85,14 @@ namespace SolarSystem.Classes
             return new List<OrbitObject>(satellites);
         }
 
+        public void SetCenters()
+        {
+            foreach (Satellite satellite in satellites)
+            {
+                satellite.Center = this;
+            }
+        }
+
         public Type GetOrbitObjectsType()
         {
             return satellites.GetType().GetGenericArguments().Single();

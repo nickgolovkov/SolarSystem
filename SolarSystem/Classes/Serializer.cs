@@ -60,7 +60,10 @@ namespace SolarSystem.Classes
                 catch { }
             }
 
-            SetCenters(spaceObj);
+            if (spaceObj is ICentral)
+            {
+                (spaceObj as ICentral).SetCenters();
+            }
 
             return spaceObj;
         }
@@ -85,7 +88,7 @@ namespace SolarSystem.Classes
 
             foreach (Star star in stars)
             {
-                SetCenters(star);
+                star.SetCenters();
             }
 
             return stars;
@@ -119,8 +122,11 @@ namespace SolarSystem.Classes
             {
                 spaceObj = (SpaceObject)formatter.Deserialize(stream);
             }
-
-            SetCenters(spaceObj);
+            
+            if (spaceObj is ICentral)
+            {
+                (spaceObj as ICentral).SetCenters();
+            }
 
             return spaceObj;
         }
@@ -137,7 +143,7 @@ namespace SolarSystem.Classes
             
             foreach (Star star in stars)
             {
-                SetCenters(star);
+                star.SetCenters();
             }
 
             return stars;
@@ -172,7 +178,10 @@ namespace SolarSystem.Classes
                 spaceObj = (SpaceObject)jsonFormatter.ReadObject(stream);
             }
             
-            SetCenters(spaceObj);
+            if (spaceObj is ICentral)
+            {
+                (spaceObj as ICentral).SetCenters();
+            }
 
             return spaceObj;
         }
@@ -189,23 +198,10 @@ namespace SolarSystem.Classes
 
             foreach (Star star in stars)
             {
-                SetCenters(star);
+                star.SetCenters();
             }
 
             return stars;
-        }
-
-
-        private static void SetCenters(SpaceObject spaceObj)
-        {
-            if (spaceObj is Star)
-            {
-                OrbitObject.SetCenters(spaceObj as Star);
-            }
-            if (spaceObj is Planet)
-            {
-                OrbitObject.SetCenters(spaceObj as Planet);
-            }
         }
     }
 }

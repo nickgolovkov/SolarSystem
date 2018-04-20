@@ -133,7 +133,7 @@ namespace SolarSystem.Classes
             spaceObject.MouseRightButtonDown += ShowProperties;
         }
 
-        protected void ShowProperties(object sender, MouseButtonEventArgs e)
+        public void ShowProperties(object sender, MouseButtonEventArgs e)
         {
             Canvas parent = ParentCanvas.Parent as Canvas;
             SpaceObjProperties spaceObjProperties = new UI.SpaceObjProperties(this, Mouse.GetPosition(parent), parent);

@@ -110,7 +110,7 @@ namespace SolarSystem.Classes
         public PlanetWithRings(string name, double radius, double ringsRadius, Star center, double orbit, double period, string texturePath, string ringsTexturePath): base(name, radius, center, orbit, period, texturePath)
         {
             RingsRadius = ringsRadius;
-            RingsTexture = LoadTexture(texturePath);
+            RingsTexture = LoadTexture(ringsTexturePath);
 
             SetRingsPosition();
 

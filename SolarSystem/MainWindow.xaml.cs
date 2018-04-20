@@ -42,25 +42,23 @@ namespace SolarSystem
         private List<Star> stars = new List<Star>();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //Star sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
+            //Star sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2), "Textures/Sun.png");
 
-            //Planet mercury = new Planet("Mercury", 2.4, sun, sun.Radius + 58, 880);
-            //Planet venus = new Planet("Venus", 6.0, sun, sun.Radius + 108.2, 2250);
-            //Planet earth = new Planet("Earth", 6.3, sun, sun.Radius + 149.6, 3650);
-            //Satellite moon = new Satellite("Moon", 1.7, earth, earth.Radius + 3.8, 270);
-            //Planet mars = new Planet("Mars", 3.4, sun, sun.Radius + 227.9, 6870);
-            //Planet jupiter = new Planet("Jupiter", 69.9, sun, sun.Radius + 778.5, 120 * 365);
-            //PlanetWithRings saturn = new PlanetWithRings("Saturn", 58.2, 130, sun, sun.Radius + 1429, 290 * 365);
-            //Planet uranus = new Planet("Uranus", 25.3, sun, sun.Radius + 2871, 840 * 365);
-            //Planet neptune = new Planet("Neptune", 24.6, sun, sun.Radius + 4498, 1650 * 365);
-
+            //Planet mercury = new Planet("Mercury", 2.4, sun, sun.Radius + 58, 880, "Textures/Mercury.png");
+            //Planet venus = new Planet("Venus", 6.0, sun, sun.Radius + 108.2, 2250, "Textures/Venus.png");
+            //Planet earth = new Planet("Earth", 6.3, sun, sun.Radius + 149.6, 3650, "Textures/Earth.png");
+            //Satellite moon = new Satellite("Moon", 1.7, earth, earth.Radius + 3.8, 270, "Textures/Moon.png");
+            //Planet mars = new Planet("Mars", 3.4, sun, sun.Radius + 227.9, 6870, "Textures/Mars.png");
+            //Planet jupiter = new Planet("Jupiter", 69.9, sun, sun.Radius + 778.5, 120 * 365, "Textures/Jupiter.png");
+            //PlanetWithRings saturn = new PlanetWithRings("Saturn", 58.2, 130, sun, sun.Radius + 1429, 290 * 365, "Textures/Saturn.png", "Textures/SaturnRings.png");
+            //Planet uranus = new Planet("Uranus", 25.3, sun, sun.Radius + 2871, 840 * 365, "Textures/Uranus.png");
+            //Planet neptune = new Planet("Neptune", 24.6, sun, sun.Radius + 4498, 1650 * 365, "Textures/Neptune.png");
             //sun.Show(canvasModel);
-
             //stars.Add(sun);
 
-            //Star sun = Serializer.BinaryDeserialize("sun.bin") as Star;
-            //stars.Add(sun);
-            //sun.Show(canvasModel);
+            //Star whiteDwarf = new Star("WhiteDwarf", 160, new Point(7000, 4000), "Textures/WhiteDwarf.png");
+            //whiteDwarf.Show(canvasModel);
+            //stars.Add(whiteDwarf);
         }
 
         // Движение камеры
@@ -139,6 +137,10 @@ namespace SolarSystem
             // Open
             if (e.Key == Key.O && ctrlPressed)
             {
+                foreach (Star star in stars)
+                {
+                    star.Delete(canvasModel);
+                }
                 stars = OpenWorld();
             }
 

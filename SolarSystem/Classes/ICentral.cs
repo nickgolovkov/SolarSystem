@@ -22,6 +22,8 @@ namespace SolarSystem.Classes
     {
         List<OrbitObject> GetOrbitObjects();
 
+        void SetCenters();
+
         Type GetOrbitObjectsType();
 
         void AddOrbitObject(OrbitObject orbitObject);

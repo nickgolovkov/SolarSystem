@@ -78,6 +78,15 @@ namespace SolarSystem.Classes
         {
             return new List<OrbitObject>(planets);
         }
+        
+        public void SetCenters()
+        {
+            foreach (Planet planet in planets)
+            {
+                planet.Center = this;
+                planet.SetCenters();
+            }
+        }
 
         public void AddOrbitObject(OrbitObject orbitObject)
         {
