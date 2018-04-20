@@ -38,7 +38,7 @@ namespace SolarSystem.Classes
             spaceObject.MouseLeftButtonDown += ShowChildren;
         }
 
-        public Star(string name, double radius, Point pos, string texturePath = ""): base(name, radius, texturePath)
+        public Star(string name, double radius, Point pos, string texturePath): base(name, radius, texturePath)
         {
             Position = pos;
 

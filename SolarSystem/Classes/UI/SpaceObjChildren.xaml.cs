@@ -58,9 +58,6 @@ namespace SolarSystem.Classes.UI
 
         private void SpaceObjChildren_Loaded(object sender, RoutedEventArgs e)
         {
-            Window window = Window.GetWindow(this);
-            window.KeyDown += SpaceObjChildren_KeyDown;
-
             Canvas canvas = Parent as Canvas;
 
             if (pos.X + ActualWidth < SystemParameters.PrimaryScreenWidth)
@@ -82,32 +79,15 @@ namespace SolarSystem.Classes.UI
             }
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
         public void Close()
         {
-            Window window = Window.GetWindow(this);
-            window.KeyDown -= SpaceObjChildren_KeyDown;
-
             Canvas parent = Parent as Canvas;
             parent.Children.Remove(this);
-        }
-
-        private void SpaceObjChildren_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Delete)
-            {
-                if (listboxOrbitObjects.SelectedItem != null)
-                {
-                    SpaceObject spaceObj = (listboxOrbitObjects.SelectedItem as SpaceObjChildrenItem).spaceObj;
-                    spaceObj.Delete(spaceObj.ParentCanvas);
-
-                    listboxOrbitObjects.Items.Remove(listboxOrbitObjects.SelectedItem);
-                }
-            }
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)

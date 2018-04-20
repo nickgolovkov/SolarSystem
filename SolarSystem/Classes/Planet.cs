@@ -38,7 +38,7 @@ namespace SolarSystem.Classes
             spaceObject.MouseLeftButtonDown += ShowChildren;
         }
 
-        public Planet(string name, double radius, Star center, double orbit, double period, string texturePath = ""): base(name, radius, center, orbit, period, texturePath)
+        public Planet(string name, double radius, Star center, double orbit, double period, string texturePath): base(name, radius, center, orbit, period, texturePath)
         {
             center.planets.Add(this);
 

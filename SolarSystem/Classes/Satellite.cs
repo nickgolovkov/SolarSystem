@@ -15,7 +15,7 @@ namespace SolarSystem.Classes
 
         protected Satellite(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
-        public Satellite(string name, double radius, Planet center, double orbit, double period, string texturePath = "") : base(name, radius, center, orbit, period, texturePath)
+        public Satellite(string name, double radius, Planet center, double orbit, double period, string texturePath) : base(name, radius, center, orbit, period, texturePath)
         {
             center.satellites.Add(this);
         }

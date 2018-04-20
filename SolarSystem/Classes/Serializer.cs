@@ -33,6 +33,15 @@ namespace SolarSystem.Classes
             }
         }
 
+        public static void XmlSerialize(List<Star> stars, string path)
+        {
+            XmlSerializer xml = new XmlSerializer(stars.GetType(), new Type[] { typeof(PlanetWithRings) });
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                xml.Serialize(stream, stars);
+            }
+        }
+
         public static SpaceObject XmlDeserialize(string path, IEnumerable<Type> types)
         {
             SpaceObject spaceObj = null;
@@ -55,6 +64,33 @@ namespace SolarSystem.Classes
 
             return spaceObj;
         }
+        
+        public static List<Star> XmlDeserializeWorld(string path, IEnumerable<Type> types)
+        {
+            List<Star> stars = null;
+
+            foreach (Type type in types)
+            {
+                try
+                {
+                    XmlSerializer xml = new XmlSerializer(type, new Type[] { typeof(PlanetWithRings) });
+                    using (FileStream stream = new FileStream(path, FileMode.Open))
+                    {
+                        stars = (List<Star>)xml.Deserialize(stream);
+                    }
+                    break;
+                }
+                catch { }
+            }
+
+            foreach (Star star in stars)
+            {
+                SetCenters(star);
+            }
+
+            return stars;
+        }
+
 
         public static void BinarySerialize(SpaceObject spaceObj, string path)
         {
@@ -62,6 +98,15 @@ namespace SolarSystem.Classes
             using (FileStream stream = new FileStream(path, FileMode.Create))
             {
                 formatter.Serialize(stream, spaceObj);
+            }
+        }
+
+        public static void BinarySerialize(List<Star> stars, string path)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                formatter.Serialize(stream, stars);
             }
         }
 
@@ -80,12 +125,40 @@ namespace SolarSystem.Classes
             return spaceObj;
         }
 
+        public static List<Star> BinaryDeserializeWorld(string path)
+        {
+            List<Star> stars;
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                stars = (List<Star>)formatter.Deserialize(stream);
+            }
+            
+            foreach (Star star in stars)
+            {
+                SetCenters(star);
+            }
+
+            return stars;
+        }
+
+
         public static void JsonSerialize(SpaceObject spaceObj, string path)
         {
             DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(spaceObj.GetType(), new Type[] { typeof(Planet), typeof(Satellite), typeof(PlanetWithRings), typeof(Point) });
             using (FileStream stream = new FileStream(path, FileMode.Create))
             {
                 jsonFormatter.WriteObject(stream, spaceObj);
+            }
+        }
+
+        public static void JsonSerialize(List<Star> stars, string path)
+        {
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(stars.GetType(), new Type[] { typeof(Planet), typeof(Satellite), typeof(PlanetWithRings), typeof(Point) });
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                jsonFormatter.WriteObject(stream, stars);
             }
         }
 
@@ -103,7 +176,26 @@ namespace SolarSystem.Classes
 
             return spaceObj;
         }
-        
+
+        public static List<Star> JsonDeserializeWorld(string path, Type type)
+        {
+            List<Star> stars;
+
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(type, new Type[] { typeof(Planet), typeof(Satellite), typeof(PlanetWithRings), typeof(Point) });
+            using (FileStream stream = new FileStream(path, FileMode.Open))
+            {
+                stars = (List<Star>)jsonFormatter.ReadObject(stream);
+            }
+
+            foreach (Star star in stars)
+            {
+                SetCenters(star);
+            }
+
+            return stars;
+        }
+
+
         private static void SetCenters(SpaceObject spaceObj)
         {
             if (spaceObj is Star)

@@ -107,18 +107,10 @@ namespace SolarSystem.Classes
             ringsObject.MouseLeftButtonDown += ShowChildren;
         }
 
-        public PlanetWithRings(string name, double radius, double ringsRadius, Star center, double orbit, double period, string texturePath = "", string ringsTexturePath = ""): base(name, radius, center, orbit, period, texturePath)
+        public PlanetWithRings(string name, double radius, double ringsRadius, Star center, double orbit, double period, string texturePath, string ringsTexturePath): base(name, radius, center, orbit, period, texturePath)
         {
             RingsRadius = ringsRadius;
-
-            if (ringsTexturePath == "")
-            {
-                RingsTexture = LoadTexture("Textures/" + name + "Rings.png");
-            }
-            else
-            {
-                RingsTexture = LoadTexture(texturePath);
-            }
+            RingsTexture = LoadTexture(texturePath);
 
             SetRingsPosition();
 

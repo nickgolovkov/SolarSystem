@@ -184,5 +184,11 @@ namespace SolarSystem.Classes.UI
 
             mainWindow.timerMove.Start();
         }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            spaceObj.Delete(spaceObj.ParentCanvas);
+            Close();
+        }
     }
 }

@@ -139,5 +139,8 @@
   <ItemGroup>
     <Resource Include="Classes\UI\Texture.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Classes\UI\Close.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

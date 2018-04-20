@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Windows.Threading;
+using Microsoft.Win32;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using SolarSystem.Classes;
@@ -41,21 +42,25 @@ namespace SolarSystem
         private List<Star> stars = new List<Star>();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Star sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
+            //Star sun = new Star("Sun", 695, new Point(ActualWidth / 2, ActualHeight / 2));
 
-            Planet mercury = new Planet("Mercury", 2.4, sun, sun.Radius + 58, 880);
-            Planet venus = new Planet("Venus", 6.0, sun, sun.Radius + 108.2, 2250);
-            Planet earth = new Planet("Earth", 6.3, sun, sun.Radius + 149.6, 3650);
-            Satellite moon = new Satellite("Moon", 1.7, earth, earth.Radius + 3.8, 270);
-            Planet mars = new Planet("Mars", 3.4, sun, sun.Radius + 227.9, 6870);
-            Planet jupiter = new Planet("Jupiter", 69.9, sun, sun.Radius + 778.5, 120 * 365);
-            PlanetWithRings saturn = new PlanetWithRings("Saturn", 58.2, 130, sun, sun.Radius + 1429, 290 * 365);
-            Planet uranus = new Planet("Uranus", 25.3, sun, sun.Radius + 2871, 840 * 365);
-            Planet neptune = new Planet("Neptune", 24.6, sun, sun.Radius + 4498, 1650 * 365);
+            //Planet mercury = new Planet("Mercury", 2.4, sun, sun.Radius + 58, 880);
+            //Planet venus = new Planet("Venus", 6.0, sun, sun.Radius + 108.2, 2250);
+            //Planet earth = new Planet("Earth", 6.3, sun, sun.Radius + 149.6, 3650);
+            //Satellite moon = new Satellite("Moon", 1.7, earth, earth.Radius + 3.8, 270);
+            //Planet mars = new Planet("Mars", 3.4, sun, sun.Radius + 227.9, 6870);
+            //Planet jupiter = new Planet("Jupiter", 69.9, sun, sun.Radius + 778.5, 120 * 365);
+            //PlanetWithRings saturn = new PlanetWithRings("Saturn", 58.2, 130, sun, sun.Radius + 1429, 290 * 365);
+            //Planet uranus = new Planet("Uranus", 25.3, sun, sun.Radius + 2871, 840 * 365);
+            //Planet neptune = new Planet("Neptune", 24.6, sun, sun.Radius + 4498, 1650 * 365);
 
             //sun.Show(canvasModel);
 
-            stars.Add(sun);
+            //stars.Add(sun);
+
+            //Star sun = Serializer.BinaryDeserialize("sun.bin") as Star;
+            //stars.Add(sun);
+            //sun.Show(canvasModel);
         }
 
         // Движение камеры
@@ -123,27 +128,22 @@ namespace SolarSystem
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Keyboard.GetKeyStates(Key.LeftCtrl) != KeyStates.Down)
-            {
-                return;
-            }
+            bool ctrlPressed = Keyboard.Modifiers.HasFlag(ModifierKeys.Control);
 
-            // Serialization
-            if (e.Key == Key.S)
+            // Save
+            if (e.Key == Key.S && ctrlPressed)
             {
-                Serializer.BinarySerialize(stars.Last(), "sun.bin");
+                SaveWorld();
             }
             
-            // Deserialization
-            if (e.Key == Key.D)
+            // Open
+            if (e.Key == Key.O && ctrlPressed)
             {
-                Star sun = Serializer.BinaryDeserialize("sun.bin") as Star;
-                stars.Add(sun);
-                sun.Show(canvasModel);
+                stars = OpenWorld();
             }
 
             // Pause/Play
-            if (e.Key == Key.P || e.Key == Key.Space)
+            if ((e.Key == Key.P || e.Key == Key.Space) && ctrlPressed)
             {
                 if (timerRotate.IsEnabled)
                 {
@@ -156,10 +156,81 @@ namespace SolarSystem
             }
 
             // Quit
-            if (e.Key == Key.Q)
+            if (e.Key == Key.Q && ctrlPressed)
             {
                 Application.Current.Shutdown();
             }
+        }
+
+        private void SaveWorld()
+        {
+            timerMove.Stop();
+
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "World";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                Serializer.XmlSerialize(stars, dlg.FileName + ".xml");
+                Serializer.BinarySerialize(stars, dlg.FileName + ".bin");
+                Serializer.JsonSerialize(stars, dlg.FileName + ".json");
+            }
+
+            timerMove.Start();
+        }
+
+        private List<Star> OpenWorld()
+        {
+            timerMove.Stop();
+
+            List<Star> stars = new List<Star>();
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Space Object files (*.xml;*json;*bin)|*.xml;*json;*bin";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+
+                try
+                {
+                    switch (System.IO.Path.GetExtension(dlg.FileName).ToLower())
+                    {
+                        case ".xml":
+                            stars = Serializer.XmlDeserializeWorld(dlg.FileName, new Type[] { typeof(List<Star>) });
+                            break;
+
+                        case ".json":
+                            stars = Serializer.JsonDeserializeWorld(dlg.FileName, typeof(List<Star>));
+                            break;
+
+                        case ".bin":
+                            stars = Serializer.BinaryDeserializeWorld(dlg.FileName);
+                            break;
+                    }
+                    if (stars == null)
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error");
+                    return stars;
+                }
+
+                foreach (Star star in stars)
+                {
+                    star.Show(canvasModel);
+                }
+            }
+
+            timerMove.Start();
+
+            return stars;
         }
 
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -193,6 +264,18 @@ namespace SolarSystem
             {
                 el.Close();
             }
+        }
+
+        private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Canvas canvas = sender as Canvas;
+            foreach(UIElement el in canvas.Children)
+            {
+                if (el.IsMouseOver)
+                    return;
+            }
+
+            ClosePrevUI(sender as Canvas);
         }
     }
 }

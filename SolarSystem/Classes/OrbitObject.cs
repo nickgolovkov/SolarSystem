@@ -87,10 +87,10 @@ namespace SolarSystem.Classes
             period = info.GetDouble("Period");
         }
 
-        public OrbitObject(string name, double radius, SpaceObject center, double orbit, double period, string texturePath = ""): base(name, radius, texturePath)
+        public OrbitObject(string name, double radius, SpaceObject center, double orbit, double period, string texturePath): base(name, radius, texturePath)
         {
             this.period = period;
-            this.Center = center;
+            Center = center;
             Orbit = orbit;
 
             if (this is Satellite)

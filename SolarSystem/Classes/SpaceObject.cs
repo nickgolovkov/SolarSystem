@@ -124,18 +124,11 @@ namespace SolarSystem.Classes
             spaceObject.MouseRightButtonDown += ShowProperties;
         }
         
-        public SpaceObject(string name, double radius, string texturePath = "")
+        public SpaceObject(string name, double radius, string texturePath)
         {
             Name = name;
             Radius = radius;
-            if (texturePath == "")
-            {
-                Texture = LoadTexture("Textures/" + name + ".png");
-            }
-            else
-            {
-                Texture = LoadTexture(texturePath);
-            }
+            Texture = LoadTexture(texturePath);
 
             spaceObject.MouseRightButtonDown += ShowProperties;
         }

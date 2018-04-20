@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("classes/ui/spacetexture.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("classes/ui/close.png")]
 
 

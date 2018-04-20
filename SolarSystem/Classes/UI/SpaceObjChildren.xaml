@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:SolarSystem.Classes.UI"
              mc:Ignorable="d"
              FontFamily="./#Montserrat"
-             Loaded="SpaceObjChildren_Loaded"
-             KeyDown="SpaceObjChildren_KeyDown">
+             Loaded="SpaceObjChildren_Loaded">
     <Grid>
 
         <Rectangle Fill="#B2FFFFFF"
@@ -44,13 +43,20 @@
                      MaxHeight="220">
             </ListBox>
 
-            <Button x:Name="btnSave"
-                    Opacity="0"
-                    Width="0"
-                    Height="0"
+            <Button x:Name="btnClose"
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="3, -7"
+                    Style="{DynamicResource MaterialDesignToolButton}"
+                    Background="White"
                     IsCancel="True"
                     IsDefault="True"
-                    Click="btnSave_Click"/>
+                    Height="22"
+                    Width="22"
+                    Click="btnClose_Click">
+                <Image Source="Close.png"/>
+            </Button>
 
             <Button x:Name="btnCreate"
                     Grid.Row="2"
