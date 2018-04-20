@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="SolarSystem.Classes.SpaceObject">
-    <Position X="7.75" Y="0.5" Width="2.5" />
+    <Position X="5.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>QABMAAAAAAAAAAAgAAAAAAQgIAEEAgAAAAIAAAAAAAA=</HashCode>
       <FileName>Classes\SpaceObject.cs</FileName>
@@ -9,67 +9,74 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SolarSystem.Classes.Star">
-    <Position X="4.5" Y="5.25" Width="2.75" />
+    <Position X="2" Y="5.25" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAgAAGMAAAQAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAgAAGMAAAQAQAAAABAAAA=</HashCode>
       <FileName>Classes\Star.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SolarSystem.Classes.OrbitObject">
-    <Position X="9.5" Y="5.25" Width="2.75" />
+    <Position X="7.25" Y="5.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAAABAAAAAggAAAAAAAhEAEEAgAAAAAAAgBoAAA=</HashCode>
       <FileName>Classes\OrbitObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SolarSystem.Classes.Planet">
-    <Position X="8" Y="10.5" Width="2.75" />
+    <Position X="5.5" Y="10.25" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAAAgAAAAAAAAgAAGMCAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAAAAgAAAAAAAAgAAGMCAAAAQAAAABAAAA=</HashCode>
       <FileName>Classes\Planet.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SolarSystem.Classes.Satellite">
-    <Position X="11.5" Y="10.5" Width="2.25" />
+    <Position X="9" Y="10.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Classes\Satellite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SolarSystem.Classes.UI.SpaceObjProperties" BaseTypeListCollapsed="true">
-    <Position X="13.5" Y="0.5" Width="2.75" />
+    <Position X="14" Y="0.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAACAAAACIACAAAEABAAAAAAAICARAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAACAAAACIACAAAEQBAIAAAACICARQA=</HashCode>
       <FileName>Classes\UI\SpaceObjProperties.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="SolarSystem.Classes.UI.SpaceObjChildren" BaseTypeListCollapsed="true">
-    <Position X="17.25" Y="0.5" Width="2.75" />
+    <Position X="10.75" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAAAAAAAAAAAAACIAAAAAEABAAAAAAAACAAAA=</HashCode>
+      <HashCode>AAABAEABAAAAAAAAAAAAAIAAAAEEQAAAAAAABACAAAA=</HashCode>
       <FileName>Classes\UI\SpaceObjChildren.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="SolarSystem.Classes.Serializer">
-    <Position X="0.75" Y="0.5" Width="2.5" />
+    <Position X="0.5" Y="1" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAAABAAAAAAACAAAAAIAAAAAAAAAEgAAABAAAA=</HashCode>
+      <HashCode>AAAAEAEQABAAAAIAACAAAAAIAAAAAAAAAEgAAAAAAAA=</HashCode>
       <FileName>Classes\Serializer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="SolarSystem.Classes.ICentral">
-    <Position X="0.75" Y="5.25" Width="2.75" />
+  <Class Name="SolarSystem.Classes.PlanetWithRings">
+    <Position X="5.5" Y="14.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAACIAAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAIAAAAFAAAAAAAAAAAAAAgAAEEBgAAAABAAAAGAAA=</HashCode>
+      <FileName>Classes\PlanetWithRings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="SolarSystem.Classes.ICentral">
+    <Position X="2" Y="9.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAACIAAAAAQAAAABAAAA=</HashCode>
       <FileName>Classes\ICentral.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="SolarSystem.Classes.UI.IClosableUI">
-    <Position X="21" Y="0.5" Width="1.5" />
+    <Position X="11.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>Classes\UI\IClosableUI.cs</FileName>
