@@ -85,9 +85,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\Compression\GZip.cs" />
     <Compile Include="Classes\Compression\ICompression.cs" />
-    <Compile Include="Classes\Compression\Zip.cs" />
+    <Compile Include="Classes\Compression\Plugins.cs" />
     <Compile Include="Classes\ICentral.cs" />
     <Compile Include="Classes\OrbitObject.cs" />
     <Compile Include="Classes\Planet.cs" />

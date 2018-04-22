@@ -7,10 +7,14 @@ using System.IO;
 
 namespace SolarSystem.Classes.Compression
 {
-    interface ICompression
+    public interface ICompressor
     {
-        void Compress(string outputFile);
+        string Name { get; }
 
-        void Decompress(string outputFile);
+        string Format { get; }
+
+        void Compress(string inputFile, string outputFile);
+
+        void Decompress(string inputFile, string outputFile);
     }
 }

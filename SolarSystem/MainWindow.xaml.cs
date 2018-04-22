@@ -184,6 +184,7 @@ namespace SolarSystem
             }
         }
 
+        // Сериализация всей системы
         private void SaveWorld()
         {
             timerMove.Stop();
@@ -202,7 +203,6 @@ namespace SolarSystem
 
             timerMove.Start();
         }
-
         private void SaveCompressedWorld()
         {
             timerMove.Stop();
@@ -210,35 +210,47 @@ namespace SolarSystem
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = "World";
 
+            CompressionAlgs algorithms = new CompressionAlgs(pluginPath);
+            if (algorithms.objects.Count == 0)
+            {
+                MessageBox.Show("No plugins");
+                return;
+            }
+
+            string filter = string.Empty;
+            foreach (ICompressor alg in algorithms.objects)
+            {
+                filter += alg.Name + " archive (*" + alg.Format + ")|*" + alg.Format + "|";
+            }
+            dlg.Filter = filter.TrimEnd('|');
+
             bool? result = dlg.ShowDialog();
 
             if (result == true)
             {
-                Serializer.XmlSerialize(stars, dlg.FileName + ".xml");
-                using (Zip gzip = new Zip(dlg.FileName + ".xml"))
-                {
-                    gzip.Compress(dlg.FileName + ".xml" + ".zip");
-                }
-                File.Delete(dlg.FileName + ".xml");
+                string ext = System.IO.Path.GetExtension(dlg.FileName);
+                string name = dlg.FileName.Replace(ext, "");
+                ICompressor compressor = algorithms.objects.Find(obj => obj.Format == ext.ToLower());
 
-                //Serializer.BinarySerialize(stars, dlg.FileName + ".bin");
-                //using (GZip gzip = new GZip(dlg.FileName + ".bin"))
-                //{
-                //    gzip.Compress(dlg.FileName + ".bin" + ".gz");
-                //}
-                //File.Delete(dlg.FileName + ".bin");
+                Serializer.XmlSerialize(stars, name + ".xml");
+                compressor.Compress(name + ".xml", name + ".xml" + ext);
+                File.Delete(name + ".xml");
 
-                Serializer.JsonSerialize(stars, dlg.FileName + ".json");
-                using (GZip gzip = new GZip(dlg.FileName + ".json"))
-                {
-                    gzip.Compress(dlg.FileName + ".json" + ".gz");
-                }
-                File.Delete(dlg.FileName + ".json");
+                Serializer.BinarySerialize(stars, name + ".bin");
+                compressor.Compress(name + ".bin", name + ".bin" + ext);
+                File.Delete(name + ".bin");
+
+                Serializer.JsonSerialize(stars, name + ".json");
+                compressor.Compress(name + ".json", name + ".json" + ext);
+                File.Delete(name + ".json");
             }
 
             timerMove.Start();
         }
 
+        private string pluginPath = "Plugins";
+
+        // Окрытие сохраненной системы
         private List<Star> OpenWorld()
         {
             timerMove.Stop();
@@ -272,15 +284,27 @@ namespace SolarSystem
 
             return stars;
         }
-
         private List<Star> OpenCompressedWorld()
         {
             timerMove.Stop();
 
             List<Star> stars = new List<Star>();
+            CompressionAlgs algorithms = new CompressionAlgs(pluginPath);
+            if (algorithms.objects.Count == 0)
+            {
+                MessageBox.Show("No plugins");
+                return stars;
+            }
 
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Archives (*zip;*gz)|*.zip;*gz";
+
+            string filter = string.Empty;
+            foreach (ICompressor alg in algorithms.objects)
+            {
+                filter += "*" + alg.Format + ";";
+            }
+            filter = filter.TrimEnd(';');
+            dlg.Filter = "Archives (" + filter + ")|" + filter;
 
             bool? result = dlg.ShowDialog();
 
@@ -290,22 +314,9 @@ namespace SolarSystem
                 {
                     string ext = System.IO.Path.GetExtension(dlg.FileName);
                     string temp = dlg.FileName.Replace(ext, "");
-                    switch (ext.ToLower())
-                    {
-                        case ".gz":
-                            using (GZip gzip = new GZip(dlg.FileName))
-                            {
-                                gzip.Decompress(temp);
-                            }
-                            break;
 
-                        case ".zip":
-                            using (Zip zip = new Zip(dlg.FileName))
-                            {
-                                zip.Decompress(temp);
-                            }
-                            break;
-                    }
+                    ICompressor compressor = algorithms.objects.Find(obj => obj.Format == ext.ToLower());
+                    compressor.Decompress(dlg.FileName, temp);
                     
                     stars = DeserializeWorld(temp);
 
@@ -327,7 +338,6 @@ namespace SolarSystem
 
             return stars;
         }
-
         private List<Star> DeserializeWorld(string fileName)
         {
             List<Star> stars = null;

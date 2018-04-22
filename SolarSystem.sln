@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarSystem", "SolarSystem\SolarSystem.csproj", "{9829EF5C-0524-4601-800B-45DCFC0EEA48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZip", "GZip\GZip.csproj", "{45182831-82EA-47AC-88DC-681E385F6340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zip", "Zip\Zip.csproj", "{69CAB43D-EAFC-48C5-A8C1-2087FEA8BBE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{9829EF5C-0524-4601-800B-45DCFC0EEA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9829EF5C-0524-4601-800B-45DCFC0EEA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9829EF5C-0524-4601-800B-45DCFC0EEA48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45182831-82EA-47AC-88DC-681E385F6340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45182831-82EA-47AC-88DC-681E385F6340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45182831-82EA-47AC-88DC-681E385F6340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45182831-82EA-47AC-88DC-681E385F6340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69CAB43D-EAFC-48C5-A8C1-2087FEA8BBE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69CAB43D-EAFC-48C5-A8C1-2087FEA8BBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69CAB43D-EAFC-48C5-A8C1-2087FEA8BBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69CAB43D-EAFC-48C5-A8C1-2087FEA8BBE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
