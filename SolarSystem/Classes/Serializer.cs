@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Security.Cryptography;
 using SolarSystem.Classes;
 using SolarSystem.Classes.UI;
 

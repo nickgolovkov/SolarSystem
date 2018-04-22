@@ -19,6 +19,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using SolarSystem.Classes;
 using SolarSystem.Classes.UI;
+using SolarSystem.Classes.Compression;
 
 namespace SolarSystem
 {
@@ -131,7 +132,16 @@ namespace SolarSystem
             // Save
             if (e.Key == Key.S && ctrlPressed)
             {
-                SaveWorld();
+                bool shiftPressed = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+
+                if (shiftPressed)
+                {
+                    SaveCompressedWorld();
+                }
+                else
+                {
+                    SaveWorld();
+                }
             }
             
             // Open
@@ -141,7 +151,17 @@ namespace SolarSystem
                 {
                     star.Delete(canvasModel);
                 }
-                stars = OpenWorld();
+
+                bool shiftPressed = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+
+                if (shiftPressed)
+                {
+                    stars = OpenCompressedWorld();
+                }
+                else
+                {
+                    stars = OpenWorld();
+                }
             }
 
             // Pause/Play
@@ -183,6 +203,42 @@ namespace SolarSystem
             timerMove.Start();
         }
 
+        private void SaveCompressedWorld()
+        {
+            timerMove.Stop();
+
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "World";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                Serializer.XmlSerialize(stars, dlg.FileName + ".xml");
+                using (Zip gzip = new Zip(dlg.FileName + ".xml"))
+                {
+                    gzip.Compress(dlg.FileName + ".xml" + ".zip");
+                }
+                File.Delete(dlg.FileName + ".xml");
+
+                //Serializer.BinarySerialize(stars, dlg.FileName + ".bin");
+                //using (GZip gzip = new GZip(dlg.FileName + ".bin"))
+                //{
+                //    gzip.Compress(dlg.FileName + ".bin" + ".gz");
+                //}
+                //File.Delete(dlg.FileName + ".bin");
+
+                Serializer.JsonSerialize(stars, dlg.FileName + ".json");
+                using (GZip gzip = new GZip(dlg.FileName + ".json"))
+                {
+                    gzip.Compress(dlg.FileName + ".json" + ".gz");
+                }
+                File.Delete(dlg.FileName + ".json");
+            }
+
+            timerMove.Start();
+        }
+
         private List<Star> OpenWorld()
         {
             timerMove.Stop();
@@ -196,27 +252,9 @@ namespace SolarSystem
 
             if (result == true)
             {
-
                 try
                 {
-                    switch (System.IO.Path.GetExtension(dlg.FileName).ToLower())
-                    {
-                        case ".xml":
-                            stars = Serializer.XmlDeserializeWorld(dlg.FileName, new Type[] { typeof(List<Star>) });
-                            break;
-
-                        case ".json":
-                            stars = Serializer.JsonDeserializeWorld(dlg.FileName, typeof(List<Star>));
-                            break;
-
-                        case ".bin":
-                            stars = Serializer.BinaryDeserializeWorld(dlg.FileName);
-                            break;
-                    }
-                    if (stars == null)
-                    {
-                        throw new Exception();
-                    }
+                    stars = DeserializeWorld(dlg.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -231,6 +269,86 @@ namespace SolarSystem
             }
 
             timerMove.Start();
+
+            return stars;
+        }
+
+        private List<Star> OpenCompressedWorld()
+        {
+            timerMove.Stop();
+
+            List<Star> stars = new List<Star>();
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Archives (*zip;*gz)|*.zip;*gz";
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                try
+                {
+                    string ext = System.IO.Path.GetExtension(dlg.FileName);
+                    string temp = dlg.FileName.Replace(ext, "");
+                    switch (ext.ToLower())
+                    {
+                        case ".gz":
+                            using (GZip gzip = new GZip(dlg.FileName))
+                            {
+                                gzip.Decompress(temp);
+                            }
+                            break;
+
+                        case ".zip":
+                            using (Zip zip = new Zip(dlg.FileName))
+                            {
+                                zip.Decompress(temp);
+                            }
+                            break;
+                    }
+                    
+                    stars = DeserializeWorld(temp);
+
+                    File.Delete(temp);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error");
+                    return stars;
+                }
+
+                foreach (Star star in stars)
+                {
+                    star.Show(canvasModel);
+                }
+            }
+
+            timerMove.Start();
+
+            return stars;
+        }
+
+        private List<Star> DeserializeWorld(string fileName)
+        {
+            List<Star> stars = null;
+            switch (System.IO.Path.GetExtension(fileName).ToLower())
+            {
+                case ".xml":
+                    stars = Serializer.XmlDeserializeWorld(fileName, new Type[] { typeof(List<Star>) });
+                    break;
+
+                case ".json":
+                    stars = Serializer.JsonDeserializeWorld(fileName, typeof(List<Star>));
+                    break;
+
+                case ".bin":
+                    stars = Serializer.BinaryDeserializeWorld(fileName);
+                    break;
+            }
+            if (stars == null)
+            {
+                throw new Exception();
+            }
 
             return stars;
         }

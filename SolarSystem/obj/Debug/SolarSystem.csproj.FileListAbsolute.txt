@@ -40,3 +40,4 @@ D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Cla
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjChildrenItem.g.cs
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjChildren.baml
 D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\obj\Debug\Classes\UI\SpaceObjChildrenItem.baml
+D:\Education\БГУИР ООТПиСП\Git\SolarSystem\SolarSystem\bin\Debug\System.IO.Compression.dll
